@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log Data</title>
+
+    <!-- ✅ Google Font: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- ✅ Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #333;
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background: #ffffff;
+            padding: 12px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            margin-top: 5px;
+            height: 70px;
+            object-fit: contain;
+        }
+
+        .user-circle {
+            width: 32px;
+            height: 32px;
+            background-color: #9ca3af;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .user-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .user-menu {
+            position: absolute;
+            top: 40px;
+            right: 0;
+            background-color: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 8px 0;
+            min-width: 150px;
+            z-index: 10;
+        }
+
+        .user-menu a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .user-menu a:hover {
+            background-color: #f3f4f6;
+        }
+
+        .user-menu a.delete-account {
+            color: #dc3545;
+            font-weight: 500;
+        }
+
+        /* ===== MAIN ===== */
+        .main {
+            flex: 1;
+            display: flex;
+            background: #ffffff;
+        }
+
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            gap: 26px;
+            margin: 0;
+            padding: 0;
+            margin-left: 680px;
+        }
+
+        .main-nav ul li a {
+            text-decoration: none;
+            color: #111827;
+            font-weight: 500;
+            font-size: 14px;
+            padding: 8px 14px;
+            border-radius: 6px;
+            transition: 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .main-nav ul li a:hover {
+            color: #fff;
+            background: #111827;
+        }
+
+        .main-nav ul li a.active {
+            background: #111827;
+            color: #fff;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #f9fafb;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 16px;
+            margin: 24px;
+
+            /* 🔧 Atur tinggi sidebar */
+            height: 455px;
+            /* ganti sesuai keinginan, misal 400px, 450px, dll */
+            overflow-y: auto;
+            /* biar kalau kontennya lebih panjang, bisa discroll */
+        }
+
+        .sidebar .name {
+            margin-top: 12px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .sidebar .nav {
+            margin-top: 24px;
+            width: 100%;
+        }
+
+        .sidebar .nav-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 11px !important;
+            text-align: left;
+            width: 100%;
+            padding-left: 8px;
+            cursor: pointer;
+            line-height: 1.3;
+            background: none;
+        }
+
+        #marketingToggle span {
+            font-size: 11px !important;
+            line-height: 1.3;
+        }
+
+        .sidebar form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sidebar form label img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            aspect-ratio: 1 / 1;
+            border: 2px solid #e5e7eb;
+            display: block;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .content {
+            flex: 1;
+            padding: 40px;
+        }
+
+        /* ===== PAGE TITLE (ikon rumah abu-abu + Dashboard) ===== */
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #0a0b0b;
+            margin-bottom: 24px;
+        }
+
+        .page-title i {
+            color: #9ca3af;
+            font-size: 15px;
+        }
+
+        .section-title {
+            font-weight: 600;
+            margin-bottom: 16px;
+            font-size: 18px;
+        }
+
+        /* ===== TABEL ===== */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        th,
+        td {
+            border: 1px solid #e5e7eb;
+            padding: 10px 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #f9fafb;
+            color: #333333;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .pagination button {
+            padding: 6px 12px;
+            border: 1px solid #d1d5db;
+            background: #fff;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .pagination button.active {
+            background: #111827;
+            color: white;
+        }
+
+        footer {
+            background: #1f2937;
+            color: #fff;
+            text-align: left;
+            padding: 32px 24px;
+            font-size: 13px;
+            min-height: 80px;
+            margin-top: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+            <div class="logo">
+                <img src="/img/koperasi-jatim-capital-logo.png" alt="Logo Koperasi Berkembang Bersama Kami">
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="/dashboard">Dashboard</a></li>
+                    <li><a href="/login">Log In</a></li>
+                    <li><a href="/signup">Sign Up</a></li>
+                </ul>
+            </nav>
+
+            <div class="user-dropdown">
+                <div class="user-circle" id="userMenuToggle">
+                    <%= user.first_name.charAt(0).toUpperCase() %>
+                </div>
+                <div class="user-menu hidden" id="userMenu">
+                    <a href="/logout"><i class="fa-solid fa-right-from-bracket" style="color:#dc3545;"></i> Logout</a>
+                    <form action="/delete-account" method="POST"
+                        onsubmit="return confirm('Apakah Anda yakin ingin menghapus akun Anda?')" style="margin: 0;">
+                        <button type="submit" class="delete-account"
+                            style="background: none; border: none; width: 100%; text-align: left; padding: 8px 16px; color: #dc3545; font-weight: 500; display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <i class="fa-solid fa-trash"></i> Delete Account
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </header>
+
+        <div class="main">
+            <aside class="sidebar">
+                <form action="/upload-profile" method="POST" enctype="multipart/form-data">
+                    <% const profileImage=user.profile_picture && user.profile_picture.trim() !=='' ?
+                        user.profile_picture : '/img/profile.png' ; %>
+                        <label for="profileUpload">
+                            <img src="<%= profileImage %>" alt="Profile" onerror="this.src='/img/profile.png';" />
+                        </label>
+                        <input id="profileUpload" type="file" name="profile_picture" style="display: none;"
+                            onchange="this.form.submit()" />
+                </form>
+
+                <div class="name">
+                    <%= user.first_name %>
+                        <%= user.last_name %>
+                </div>
+
+                <div class="nav">
+                    <div class="nav-item" id="goMain">Dashboard</div>
+                    <div class="nav-item" id="marketingToggle" style="display: flex; justify-content: space-between;">
+                        <span>Laporan</span>
+                        <span>&#9662;</span>
+                    </div>
+                    <div id="marketingMenu" class="hidden" style="padding-left: 16px;">
+                        <div class="nav-item" id="goProspect">Document Checklist</div>
+                        <div class="nav-item">Document Upload</div>
+                        <div class="nav-item" id="goLog">Log Data</div>
+                    </div>
+                    <div class="nav-item">Notes</div>
+                </div>
+            </aside>
+
+            <div class="content">
+                <div class="page-title">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Log Data</span>
+                </div>
+
+                <!-- ✅ TABEL DATA -->
+                <table id="logTable">
+                    <thead>
+                        <tr>
+                            <th>Jenis Pemohon</th>
+                            <th>Nama</th>
+                            <th>Nama Perusahaan</th>
+                            <th>Bidang Usaha</th>
+                            <th>Keterangan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% records.forEach((row, index)=> { %>
+                            <tr>
+                                <td>
+                                    <%= row.jenis_pemohon %>
+                                </td>
+                                <td>
+                                    <%= row.nama %>
+                                </td>
+                                <td>
+                                    <%= row.nama_perusahaan %>
+                                </td>
+                                <td>
+                                    <%= row.bidang_usaha %>
+                                </td>
+                                <td>
+                                    <%= row.keterangan %>
+                                </td>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
+
+                <!-- ✅ PAGINATION -->
+                <div class="pagination" id="pagination"></div>
+            </div>
+        </div>
+
+        <footer>© Jatim Capital 2025</footer>
+    </div>
+
+    <script>
+        // === SIDEBAR TOGGLE ===
+        document.addEventListener("DOMContentLoaded", function () {
+            const marketingToggle = document.getElementById("marketingToggle");
+            const marketingMenu = document.getElementById("marketingMenu");
+            marketingToggle.addEventListener("click", () => {
+                marketingMenu.classList.toggle("hidden");
+            });
+
+            document.getElementById("goProspect").addEventListener("click", function () {
+                window.location.href = "/document-checklist";
+            });
+            document.getElementById("goLog").addEventListener("click", function () {
+                window.location.href = "/log-data";
+            });
+            document.getElementById("goMain").addEventListener("click", function () {
+                window.location.href = "/dashboard";
+            });
+        });
+
+        // === PAGINATION + MINIMAL 6 ROWS ===
+        const rowsPerPage = 8; // ⬅️ minimal 6 baris per halaman
+        const table = document.getElementById("logTable");
+        const tbody = table.querySelector("tbody");
+        const pagination = document.getElementById("pagination");
+        const rows = Array.from(tbody.querySelectorAll("tr"));
+        const pageCount = Math.ceil(rows.length / rowsPerPage) || 1; // minimal 1 halaman
+
+        // === Tambahkan baris kosong agar setiap halaman punya 6 baris ===
+        const totalNeeded = pageCount * rowsPerPage;
+        if (rows.length < totalNeeded) {
+            const cols = table.querySelectorAll("thead th").length;
+            for (let i = rows.length; i < totalNeeded; i++) {
+                const emptyRow = document.createElement("tr");
+                for (let j = 0; j < cols; j++) {
+                    const td = document.createElement("td");
+                    td.innerHTML = "&nbsp;"; // isi spasi supaya tetap rapi
+                    emptyRow.appendChild(td);
+                }
+                tbody.appendChild(emptyRow);
+            }
+        }
+
+        const allRows = Array.from(tbody.querySelectorAll("tr"));
+
+        function showPage(page) {
+            allRows.forEach((row, i) => {
+                row.style.display = (i >= (page - 1) * rowsPerPage && i < page * rowsPerPage) ? "" : "none";
+            });
+
+            document.querySelectorAll(".pagination button").forEach((btn, i) => {
+                btn.classList.toggle("active", i + 1 === page);
+            });
+        }
+
+        // === Buat tombol pagination ===
+        pagination.innerHTML = "";
+        for (let i = 1; i <= pageCount; i++) {
+            const btn = document.createElement("button");
+            btn.textContent = i;
+            btn.addEventListener("click", () => showPage(i));
+            pagination.appendChild(btn);
+        }
+
+        if (pageCount > 0) showPage(1);
+    </script>
+</body>
+
+</html>

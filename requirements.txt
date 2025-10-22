@@ -1,0 +1,4 @@
+npm install express ejs express-session connect-flash passport passport-local bcryptjs body-parser mysql2
+npm install nodemailer crypto
+#npm i body-parser
+node app.js #running website

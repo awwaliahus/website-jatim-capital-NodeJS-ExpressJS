@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Document Checklist</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Font & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #333;
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background: #ffffff;
+            padding: 12px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            margin-top: 5px;
+            height: 70px;
+            object-fit: contain;
+        }
+
+        /* ===== MAIN NAVIGATION ===== */
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            gap: 26px;
+            margin: 0;
+            padding: 0;
+            margin-left: 680px;
+        }
+
+        .main-nav ul li a {
+            text-decoration: none;
+            color: #111827;
+            font-weight: 500;
+            font-size: 14px;
+            padding: 8px 14px;
+            border-radius: 6px;
+            transition: 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .main-nav ul li a:hover {
+            color: #fff;
+            background: #111827;
+        }
+
+        .main-nav ul li a.active {
+            background: #111827;
+            color: #fff;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            header {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .main-nav {
+                width: 100%;
+                text-align: center;
+                margin-top: 10px;
+            }
+
+            .main-nav ul {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+        }
+
+        .user-circle {
+            width: 32px;
+            height: 32px;
+            background-color: #9ca3af;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .user-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .user-menu {
+            position: absolute;
+            top: 40px;
+            right: 0;
+            background-color: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 8px 0;
+            min-width: 150px;
+            z-index: 10;
+        }
+
+        .user-menu a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .user-menu a:hover {
+            background-color: #f3f4f6;
+        }
+
+        .user-menu a.delete-account {
+            color: #dc3545;
+            font-weight: 500;
+        }
+
+        /* ===== MAIN ===== */
+        .main {
+            flex: 1;
+            display: flex;
+            background: #ffffff;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            width: 250px;
+            background: #f9fafb;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 16px;
+            margin: 24px;
+
+            /* 🔧 Atur tinggi sidebar */
+            height: 455px;
+            overflow-y: auto;
+            /* biar kalau kontennya lebih panjang, bisa discroll */
+        }
+
+        .sidebar .name {
+            margin-top: 6px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .sidebar .nav {
+            margin-top: 24px;
+            width: 100%;
+        }
+
+        .sidebar .nav-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 11px !important;
+            text-align: left;
+            width: 100%;
+            padding-left: 8px;
+            cursor: pointer;
+            line-height: 1.3;
+            background: none;
+        }
+
+        #marketingToggle span {
+            font-size: 11px !important;
+            line-height: 1.3;
+        }
+
+        .sidebar form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sidebar form label img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            aspect-ratio: 1 / 1;
+            border: 2px solid #e5e7eb;
+            display: block;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .content {
+            flex: 1;
+            padding: 40px;
+        }
+
+        /* ===== TITLE ===== */
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #0a0b0b;
+            margin-bottom: 24px;
+        }
+
+        .page-title i {
+            color: #9ca3af;
+            font-size: 15px;
+        }
+
+        /* ===== FORM & TABLE ===== */
+        .form-table-container {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        form#businessForm {
+            width: 100%;
+            max-width: 380px;
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+        }
+
+        label {
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: block;
+            font-weight: 500;
+        }
+
+        select,
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        #tableSection {
+            flex: 1;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+        }
+
+        #tableSectionPerorangan {
+            flex: 1;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            margin-top: 92px;
+            margin-bottom: 40px;
+            margin-right: 40px;
+            height: auto;
+            width: auto;
+            min-width: 722px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid #e5e7eb;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #f9fafb;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        td input[type="checkbox"] {
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* ===== BUTTONS ===== */
+        .button-container {
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .btn {
+            background-color: #111827;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #9297a4;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #1f2937;
+            color: #fff;
+            text-align: left;
+            padding: 32px 24px;
+            font-size: 13px;
+            min-height: 80px;
+        }
+
+        /* ===== STATUS ICON ANIMATION ===== */
+        .status-result {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .status-result i {
+            font-size: 36px;
+            margin-bottom: 5px;
+        }
+
+        .status-result span {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .status-result.success i {
+            color: #16a34a;
+            animation: scaleUp 0.4s ease;
+        }
+
+        .status-result.success span {
+            color: #16a34a;
+        }
+
+        .status-result.failed i {
+            color: #dc2626;
+            animation: scaleUp 0.4s ease;
+        }
+
+        .status-result.failed span {
+            color: #dc2626;
+        }
+
+        .status-result.pending i {
+            color: #eab308;
+            animation: pulse 1.5s infinite;
+        }
+
+        .status-result.pending span {
+            color: #eab308;
+        }
+
+        /* ANIMASI */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleUp {
+            from {
+                transform: scale(0.7);
+            }
+
+            to {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- ===== HEADER ===== -->
+        <header>
+            <div class="logo">
+                <img src="/img/koperasi-jatim-capital-logo.png" alt="Logo Koperasi Berkembang Bersama Kami">
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="/dashboard">Dashboard</a></li>
+                    <li><a href="/login">Log In</a></li>
+                    <li><a href="/signup">Sign Up</a></li>
+                </ul>
+            </nav>
+
+            <div class="user-dropdown">
+                <div class="user-circle" id="userMenuToggle">
+                    <%= user.first_name.charAt(0).toUpperCase() %>
+                </div>
+                <div class="user-menu hidden" id="userMenu">
+                    <a href="/logout"><i class="fa-solid fa-right-from-bracket" style="color:#dc3545;"></i> Logout</a>
+                    <form action="/delete-account" method="POST"
+                        onsubmit="return confirm('Apakah Anda yakin ingin menghapus akun Anda?')" style="margin: 0;">
+                        <button type="submit" class="delete-account"
+                            style="background: none; border: none; width: 100%; text-align: left; padding: 8px 16px; color: #dc3545; font-weight: 500; display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <i class="fa-solid fa-trash"></i> Delete Account
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </header>
+
+        <!-- ===== MAIN CONTENT ===== -->
+        <div class="main">
+            <!-- SIDEBAR -->
+            <aside class="sidebar">
+                <form action="/upload-profile" method="POST" enctype="multipart/form-data">
+                    <% const profileImage=user.profile_picture && user.profile_picture.trim() !=='' ?
+                        user.profile_picture : '/img/profile.png' ; %>
+                        <label for="profileUpload">
+                            <img src="<%= profileImage %>" alt="Profile" onerror="this.src='/img/profile.png';" />
+                        </label>
+                        <input id="profileUpload" type="file" name="profile_picture" style="display: none;"
+                            onchange="this.form.submit()" />
+                </form>
+
+                <div class="name">
+                    <%= user.first_name %>
+                        <%= user.last_name %>
+                </div>
+
+                <div class="nav">
+                    <div class="nav-item" id="goMain">Dashboard</div>
+                    <div class="nav-item" id="marketingToggle" style="display: flex; justify-content: space-between;">
+                        <span>Laporan</span>
+                        <span>&#9662;</span>
+                    </div>
+                    <div id="marketingMenu" class="hidden" style="padding-left: 16px;">
+                        <div class="nav-item" id="goProspect">Document Checklist</div>
+                        <div class="nav-item">Document Upload</div>
+                        <div class="nav-item" id="goLog">Log Data</div>
+                    </div>
+                    <div class="nav-item">Notes</div>
+                </div>
+            </aside>
+
+            <!-- CONTENT -->
+            <div class="content">
+                <div class="page-title">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Document Checklist</span>
+                </div>
+
+                <div class="form-table-container">
+                    <!-- FORM -->
+                    <form id="businessForm" method="POST" action="/document-checklist">
+                        <label for="jenisPemohon">Jenis Pemohon:</label>
+                        <select id="jenisPemohon" name="jenis_pemohon" required>
+                            <option value="">-- Pilih Jenis Pemohon --</option>
+                            <option value="perusahaan">Perusahaan</option>
+                            <option value="perorangan">Perorangan</option>
+                        </select>
+
+                        <div id="formPerusahaan" class="hidden">
+                            <label for="nama">Nama:</label>
+                            <input type="text" id="nama" name="nama" placeholder="Masukkan nama anda" />
+
+                            <label for="nama_perusahaan">Nama Perusahaan:</label>
+                            <input type="text" id="namaPerusahaan" name="nama_perusahaan"
+                                placeholder="Masukkan nama perusahaan" />
+
+                            <label for="bidang_usaha">Bidang Usaha:</label>
+                            <input type="text" id="bidangUsaha" name="bidang_usaha"
+                                placeholder="Masukkan bidang usaha" />
+                        </div>
+
+                        <div id="formPerorangan" class="hidden">
+                            <label for="nama2">Nama:</label>
+                            <input type="text" id="nama2" name="nama" placeholder="Masukkan nama anda" />
+
+                            <label for="namaPerusahaan2">Nama Perusahaan:</label>
+                            <input type="text" id="namaPerusahaan2" name="nama_perusahaan"
+                                placeholder="Masukkan nama perusahaan" />
+
+                            <label for="bidangUsaha2">Bidang Usaha:</label>
+                            <input type="text" id="bidangUsaha2" name="bidang_usaha"
+                                placeholder="Masukkan bidang usaha" />
+                        </div>
+                    </form>
+
+                    <!-- TABLE -->
+                    <div id="tableSection" class="hidden">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Dokumen</th>
+                                    <th>Ada</th>
+                                    <th>Tidak Ada</th>
+                                    <th>Keterangan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- LEGALITAS USAHA -->
+                                <tr>
+                                    <td></td>
+                                    <td style="font-weight: bold;">LEGALITAS USAHA</td>
+                                    <td></td>
+                                    <td></td>
+                                    <!-- Merge kolom keterangan 8 baris -->
+                                    <td rowspan="20"></td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>AKTE PENDIRIAN PT/CV</td>
+                                    <td><input type="checkbox"></td>
+                                    <td><input type="checkbox"></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>AKTA PERUBAHAN PT/CV</td>
+                                    <td><input type="checkbox"></td>
+                                    <td><input type="checkbox"></td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>NPWP PT/CV</td>
+                                    <td><input type="checkbox"></td>
+                                    <td><input type="checkbox"></td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>SK MENKUMHAM PT/CV</td>
+                                    <td><input type="checkbox"></td>
+                                    <td><input type="checkbox"></td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>SIUP/NIB</td>
+                                    <td><input type="checkbox"></td>
+                                    <td><input type="checkbox"></td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>TDP</td>
+                                    <td><input type="checkbox"></td>
+                                    <td><input type="checkbox"></td>
+                                </tr>
+                                <tr>
+                                    <td>7</td>
+                                    <td>KTP SELURUH PENGURUS PT/CV</td>
+                                    <td><input type="checkbox"></td>
+                                    <td><input type="checkbox"></td>
+                                </tr>
+                                <tr>
+                                    <td>8</td>
+                                    <td>NPWP PENGURUS PT/CV</td>
+                                    <td><input type="checkbox"></td>
+                                    <td><input type="checkbox"></td>
+                                </tr>
+
+                                <!-- KEUANGAN -->
+                                <tr>
+                                    <td></td>
+                                    <td style="font-weight: bold;">KEUANGAN</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>LAPORAN KEUANGAN / REK KORAN</td>
+                                    <td><input type="checkbox"></td>
+                                    <td><input type="checkbox"></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>INVOICE PELANGGAN / KONTRAK KERJA</td>
+                                    <td><input type="checkbox"></td>
+                                    <td><input type="checkbox"></td>
+                                </tr>
+
+                                <!-- JAMINAN -->
+                                <tr>
+                                    <td></td>
+                                    <td style="font-weight: bold;">JAMINAN</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>SERTIFIKAT (SHM ATAU SHGB)</td>
+                                    <td><input type="checkbox"></td>
+                                    <td><input type="checkbox"></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>IMB</td>
+                                    <td><input type="checkbox"></td>
+                                    <td><input type="checkbox"></td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>PBB TAHUN TERAKHIR</td>
+                                    <td><input type="checkbox"></td>
+                                    <td><input type="checkbox"></td>
+                                </tr>
+
+                                <!-- LAIN-LAIN -->
+                                <tr>
+                                    <td></td>
+                                    <td style="font-weight: bold;">LAIN-LAIN</td>
+                                    <td></td>
+                                    <td></td>
+
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>SUMMARY KREDIT</td>
+                                    <td><input type="checkbox"></td>
+                                    <td><input type="checkbox"></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>HASIL RESUME PENILAIAN JAMINAN (KJPP)</td>
+                                    <td><input type="checkbox"></td>
+                                    <td><input type="checkbox"></td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>BUKU APPRAISAL</td>
+                                    <td><input type="checkbox"></td>
+                                    <td><input type="checkbox"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="button-container">
+                            <button id="addNew" class="btn">Add New</button>
+                            <button id="saveChecklist" class="btn">Save Data</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TABLE PERORANGAN -->
+            <div id="tableSectionPerorangan" class="hidden">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Dokumen</th>
+                            <th>Ada</th>
+                            <th>Tidak Ada</th>
+                            <th>Keterangan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- LEGALITAS USAHA -->
+                        <tr>
+                            <td></td>
+                            <td style="font-weight: bold;">LEGALITAS USAHA</td>
+                            <td></td>
+                            <td></td>
+                            <!-- Merge kolom keterangan 8 baris -->
+                            <td rowspan="20"></td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>KTP SUAMI/ ISTRI</td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>NPWP</td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>KARTU KELUARGA</td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>AKTA NIKAH</td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>SIUP/NIB</td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>TDP</td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+
+                        <!-- KEUANGAN -->
+                        <tr>
+                            <td></td>
+                            <td style="font-weight: bold;">KEUANGAN</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>LAPORAN KEUANGAN / REK KORAN</td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>INVOICE PELANGGAN / KONTRAK KERJA</td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+
+                        <!-- JAMINAN -->
+                        <tr>
+                            <td></td>
+                            <td style="font-weight: bold;">JAMINAN</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>SERTIFIKAT (SHM ATAU SHGB)</td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>IMB</td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>PBB TAHUN TERAKHIR</td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+
+                        <!-- LAIN-LAIN -->
+                        <tr>
+                            <td></td>
+                            <td style="font-weight: bold;">LAIN-LAIN</td>
+                            <td></td>
+                            <td></td>
+
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>SUMMARY KREDIT</td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>HASIL RESUME PENILAIAN JAMINAN (KJPP)</td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>BUKU APPRAISAL</td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button-container">
+                    <button id="addNewPerorangan" class="btn">Add New</button>
+                    <button id="saveChecklistPerorangan" class="btn">Save Data</button>
+                </div>
+            </div>
+        </div>
+        <footer>
+            © Jatim Capital 2025
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const jenisPemohon = document.getElementById("jenisPemohon");
+            const formPerusahaan = document.getElementById("formPerusahaan");
+            const formPerorangan = document.getElementById("formPerorangan");
+            const tableSection = document.getElementById("tableSection");
+            const tableSectionPerorangan = document.getElementById("tableSectionPerorangan");
+            const nama = document.getElementById("nama");
+            const namaPerusahaan = document.getElementById("namaPerusahaan");
+            const bidangUsaha = document.getElementById("bidangUsaha");
+            const nama2 = document.getElementById("nama2");
+            const namaPerusahaan2 = document.getElementById("namaPerusahaan2");
+            const bidangUsaha2 = document.getElementById("bidangUsaha2");
+            const addNewBtn = document.getElementById("addNew");
+            const addNewBtnPerorangan = document.getElementById("addNewPerorangan");
+
+            // === DROPDOWN LAPORAN ===
+            const laporanToggle = document.getElementById("marketingToggle");
+            const laporanMenu = document.getElementById("marketingMenu");
+            const arrow = laporanToggle.querySelector("span:last-child");
+
+            laporanToggle.addEventListener("click", () => {
+                laporanMenu.classList.toggle("hidden");
+                arrow.innerHTML = laporanMenu.classList.contains("hidden") ? "&#9662;" : "&#9652;";
+            });
+
+            // === NAVIGASI KE HALAMAN ===
+            const goDashboard = document.getElementById("goMain");
+            const goChecklist = document.getElementById("goProspect");
+            const goUpload = laporanMenu.querySelector(".nav-item:nth-child(2)"); // Document Upload
+            const goLog = document.getElementById("goLog");
+
+            goDashboard.addEventListener("click", () => {
+                window.location.href = "/dashboard"; // ganti sesuai route dashboard kamu
+            });
+
+            goChecklist.addEventListener("click", () => {
+                window.location.href = "/document-checklist"; // ganti sesuai route checklist
+            });
+
+            goUpload.addEventListener("click", () => {
+                window.location.href = "/document-upload"; // ganti sesuai route upload
+            });
+
+            goLog.addEventListener("click", () => {
+                window.location.href = "/log-data"; // ganti sesuai route Log Data
+            });
+
+            // === EVENT GANTI JENIS PEMOHON ===
+            jenisPemohon.addEventListener("change", function () {
+                if (this.value === "perusahaan") {
+                    formPerusahaan.classList.remove("hidden");
+                    formPerorangan.classList.add("hidden");
+                    checkFormCompletion();
+                    tableSectionPerorangan.classList.add("hidden");
+                } else if (this.value === "perorangan") {
+                    formPerorangan.classList.remove("hidden");
+                    formPerusahaan.classList.add("hidden");
+                    checkFormCompletionPerorangan();
+                    tableSection.classList.add("hidden");
+                } else {
+                    formPerusahaan.classList.add("hidden");
+                    formPerorangan.classList.add("hidden");
+                    tableSection.classList.add("hidden");
+                    tableSectionPerorangan.classList.add("hidden");
+                }
+            });
+
+            // === FORM VALIDATION PERUSAHAAN ===
+            function checkFormCompletion() {
+                if (
+                    jenisPemohon.value === "perusahaan" &&
+                    nama.value.trim() !== "" &&
+                    namaPerusahaan.value.trim() !== "" &&
+                    bidangUsaha.value.trim() !== ""
+                ) {
+                    tableSection.classList.remove("hidden");
+                } else {
+                    tableSection.classList.add("hidden");
+                }
+            }
+
+            // === FORM VALIDATION PERORANGAN ===
+            function checkFormCompletionPerorangan() {
+                if (
+                    jenisPemohon.value === "perorangan" &&
+                    nama2.value.trim() !== "" &&
+                    namaPerusahaan2.value.trim() !== "" &&
+                    bidangUsaha2.value.trim() !== ""
+                ) {
+                    tableSectionPerorangan.classList.remove("hidden");
+                } else {
+                    tableSectionPerorangan.classList.add("hidden");
+                }
+            }
+
+            [nama, namaPerusahaan, bidangUsaha, jenisPemohon].forEach(el =>
+                el.addEventListener("input", checkFormCompletion)
+            );
+            [nama2, namaPerusahaan2, bidangUsaha2, jenisPemohon].forEach(el =>
+                el.addEventListener("input", checkFormCompletionPerorangan)
+            );
+
+            // === STATUS LOGIC PERUSAHAAN ===
+            const table = document.querySelector("#tableSection table");
+            const checkboxes = table.querySelectorAll('input[type="checkbox"]');
+            const statusCell = table.querySelector("td[rowspan]");
+            const saveBtn = document.getElementById("saveChecklist");
+
+            // === STATUS LOGIC PERORANGAN ===
+            const tablePerorangan = document.querySelector("#tableSectionPerorangan table");
+            const checkboxesPerorangan = tablePerorangan.querySelectorAll('input[type="checkbox"]');
+            const statusCellPerorangan = tablePerorangan.querySelector("td[rowspan]");
+            const saveBtnPerorangan = document.getElementById("saveChecklistPerorangan");
+
+            // === UPDATE STATUS FUNGSI UMUM ===
+            function updateStatus(table, statusCell) {
+                const rows = [...table.querySelectorAll("tbody tr")].filter(r =>
+                    r.querySelector('input[type="checkbox"]')
+                );
+
+                let adaChecked = 0;
+                let tidakAdaChecked = 0;
+                let totalRows = rows.length;
+                let totalCeklis = 0;
+
+                rows.forEach(row => {
+                    const [ada, tidakAda] = row.querySelectorAll('input[type="checkbox"]');
+                    if (ada.checked) adaChecked++;
+                    if (tidakAda.checked) tidakAdaChecked++;
+                    if (ada.checked || tidakAda.checked) totalCeklis++;
+                });
+
+                let resultHTML = "";
+
+                if (adaChecked === 0 && tidakAdaChecked === 0) {
+                    resultHTML = `
+                <div class="status-result pending">
+                    <i class="fa-solid fa-hourglass-half"></i>
+                    <span>PENDING</span>
+                </div>
+            `;
+                } else if (adaChecked === totalRows) {
+                    resultHTML = `
+                <div class="status-result success">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span>LENGKAP</span>
+                </div>
+            `;
+                } else if (tidakAdaChecked === totalRows) {
+                    resultHTML = `
+                <div class="status-result failed">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                    <span>TIDAK LENGKAP</span>
+                </div>
+            `;
+                } else if (adaChecked > 0 && tidakAdaChecked > 0 && totalCeklis === totalRows) {
+                    resultHTML = `
+                <div class="status-result failed">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                    <span>TIDAK LENGKAP</span>
+                </div>
+            `;
+                } else {
+                    resultHTML = `
+                <div class="status-result pending">
+                    <i class="fa-solid fa-hourglass-half"></i>
+                    <span>PENDING</span>
+                </div>
+            `;
+                }
+
+                statusCell.innerHTML = resultHTML;
+            }
+
+            // === Jalankan status awal ===
+            updateStatus(table, statusCell);
+            updateStatus(tablePerorangan, statusCellPerorangan);
+
+            // === Event listener checkbox ===
+            checkboxes.forEach(cb => cb.addEventListener("change", () => updateStatus(table, statusCell)));
+            checkboxesPerorangan.forEach(cb =>
+                cb.addEventListener("change", () => updateStatus(tablePerorangan, statusCellPerorangan))
+            );
+
+            // === RESET TOMBOL (PERUSAHAAN) ===
+            addNewBtn.addEventListener("click", function (e) {
+                e.preventDefault();
+                document.getElementById("businessForm").reset();
+                jenisPemohon.value = "";
+                formPerusahaan.classList.add("hidden");
+                formPerorangan.classList.add("hidden");
+                const allCheckboxes = table.querySelectorAll('input[type="checkbox"]');
+                allCheckboxes.forEach(cb => (cb.checked = false));
+                statusCell.innerHTML = `
+            <div class="status-result pending">
+                <i class="fa-solid fa-hourglass-half"></i>
+                <span>PENDING</span>
+            </div>
+        `;
+                tableSection.classList.add("hidden");
+            });
+
+            // === RESET TOMBOL (PERORANGAN) ===
+            addNewBtnPerorangan.addEventListener("click", function (e) {
+                e.preventDefault();
+                document.getElementById("businessForm").reset();
+                jenisPemohon.value = "";
+                formPerorangan.classList.add("hidden");
+                formPerusahaan.classList.add("hidden");
+                const allCheckboxes = tablePerorangan.querySelectorAll('input[type="checkbox"]');
+                allCheckboxes.forEach(cb => (cb.checked = false));
+                statusCellPerorangan.innerHTML = `
+            <div class="status-result pending">
+                <i class="fa-solid fa-hourglass-half"></i>
+                <span>PENDING</span>
+            </div>
+        `;
+                tableSectionPerorangan.classList.add("hidden");
+            });
+
+            // === SIMPAN DATA (PERUSAHAAN) ===
+            saveBtn.addEventListener("click", async function (e) {
+                e.preventDefault();
+
+                const jenis = jenisPemohon.value;
+                const namaVal = nama.value.trim();
+                const namaPerusahaanVal = namaPerusahaan.value.trim();
+                const bidangUsahaVal = bidangUsaha.value.trim();
+                const keterangan = statusCell.textContent.trim();
+
+                if (!jenis || !namaVal || !namaPerusahaanVal || !bidangUsahaVal) {
+                    alert("Lengkapi form terlebih dahulu!");
+                    return;
+                }
+
+                try {
+                    const response = await fetch("/document-checklist", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            jenis_pemohon: jenis,
+                            nama: namaVal,
+                            nama_perusahaan: namaPerusahaanVal,
+                            bidang_usaha: bidangUsahaVal,
+                            keterangan: keterangan || "-",
+                        }),
+                    });
+
+                    if (response.ok) {
+                        alert("Data berhasil disimpan ke database!");
+                        document.getElementById("businessForm").reset();
+                        tableSection.classList.add("hidden");
+                    } else {
+                        alert("Gagal menyimpan data.");
+                    }
+                } catch (error) {
+                    console.error("Error saving checklist:", error);
+                    alert("Terjadi kesalahan jaringan.");
+                }
+            });
+
+            // === SIMPAN DATA (PERORANGAN) ===
+            saveBtnPerorangan.addEventListener("click", async function (e) {
+                e.preventDefault();
+
+                const jenis = jenisPemohon.value;
+                const namaVal = nama2.value.trim();
+                const namaPerusahaanVal = namaPerusahaan2.value.trim();
+                const bidangUsahaVal = bidangUsaha2.value.trim();
+                const keterangan = statusCellPerorangan.textContent.trim();
+
+                if (!jenis || !namaVal || !namaPerusahaanVal || !bidangUsahaVal) {
+                    alert("Lengkapi form terlebih dahulu!");
+                    return;
+                }
+
+                try {
+                    const response = await fetch("/document-checklist", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            jenis_pemohon: jenis,
+                            nama: namaVal,
+                            nama_perusahaan: namaPerusahaanVal,
+                            bidang_usaha: bidangUsahaVal,
+                            keterangan: keterangan || "-",
+                        }),
+                    });
+
+                    if (response.ok) {
+                        alert("Data berhasil disimpan ke database!");
+                        document.getElementById("businessForm").reset();
+                        tableSectionPerorangan.classList.add("hidden");
+                    } else {
+                        alert("Gagal menyimpan data.");
+                    }
+                } catch (error) {
+                    console.error("Error saving checklist:", error);
+                    alert("Terjadi kesalahan jaringan.");
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

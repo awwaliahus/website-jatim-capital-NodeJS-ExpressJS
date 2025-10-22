@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | Koperasi Berkembang Bersama Kami</title>
+
+  <!-- Import Google Font Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      width: 100%;
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 40px;
+      flex-shrink: 0;
+    }
+
+    .logo img {
+      height: 70px;
+      width: auto;
+      object-fit: contain;
+      margin-top: 6px;
+    }
+
+    /* ===== MAIN NAVIGATION ===== */
+    .main-nav ul {
+      list-style: none;
+      display: flex;
+      gap: 26px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .main-nav ul li a {
+      text-decoration: none;
+      color: #111827;
+      font-weight: 500;
+      font-size: 14px;
+      padding: 8px 14px;
+      border-radius: 6px;
+      transition: 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .main-nav ul li a:hover {
+      color: #fff;
+      background: #111827;
+    }
+
+    .main-nav ul li a.active {
+      background: #111827;
+      color: #fff;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      header {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .main-nav {
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
+      }
+
+      .main-nav ul {
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    .container {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+      height: calc(100vh - 120px);
+    }
+
+    .right {
+      flex: 1;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .image-right {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      background-color: #ffffff;
+      height: 100%;
+    }
+
+    .image-right img {
+      height: 100%;
+      width: auto;
+      object-fit: cover;
+      display: block;
+      margin-right: 0;
+    }
+
+    .form-box {
+      width: 100%;
+      max-width: 380px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-weight: 600;
+      color: #111827;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      color: #374151;
+      font-size: 14px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .btn-login {
+      width: 100%;
+      background-color: #000000;
+      color: #ffffff;
+      padding: 12px;
+      margin-top: 25px;
+      font-weight: 500;
+      font-size: 14px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .btn-login:hover {
+      background-color: #111827;
+    }
+
+    .forgotpassword {
+      text-align: right;
+      margin-top: 5px;
+    }
+
+    .forgotpassword a {
+      font-size: 13px;
+      color: #374151;
+      text-decoration: none;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .forgotpassword a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      background: #1f2937;
+      color: #fff;
+      text-align: left;
+      padding: 16px 40px;
+      font-size: 13px;
+      flex-shrink: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column-reverse;
+        height: auto;
+        overflow-y: auto;
+      }
+
+      .image-right {
+        height: 200px;
+        justify-content: center;
+      }
+
+      .image-right img {
+        height: 180px;
+        width: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- HEADER -->
+  <header>
+    <div class="logo">
+      <img src="/img/koperasi-jatim-capital-logo.png" alt="Logo">
+    </div>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="/home">Home</a></li>
+        <li><a href="/dashboard" >Dashboard</a></li>
+        <li><a href="/login" class="active">Log In</a></li>
+        <li><a href="/signup">Sign Up</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="page-spacer"></div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <div class="container">
+    <div class="right">
+      <div class="form-box">
+        <h2>Sign in to your account</h2>
+        <% if (message.length> 0) { %>
+          <p style="color: red; font-size: 14px; font-family: 'Poppins', sans-serif;">
+            <%= message %>
+          </p>
+          <% } %>
+            <form action="/login" method="POST">
+              <label for="username">Username or Email</label>
+              <input type="text" name="username" placeholder="Enter username or email" required>
+
+              <label for="password">Password</label>
+              <input type="password" name="password" placeholder="Enter password" required>
+
+              <div class="forgotpassword">
+                <a href="/forgot-password">Forgot your password?</a>
+              </div>
+
+              <button type="submit" class="btn-login">Sign In →</button>
+            </form>
+      </div>
+    </div>
+
+    <div class="image-right">
+      <img src="/img/frame-427319048-9.png" alt="Login Illustration">
+    </div>
+  </div>
+
+  <footer>
+    © Koperasi Berkembang Bersama Kami 2025
+  </footer>
+</body>
+
+</html>
