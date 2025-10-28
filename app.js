@@ -53,6 +53,9 @@ passport.deserializeUser((id, done) => {
   });
 });
 
+const methodOverride = require('method-override');
+app.use(methodOverride('_method'));
+
 // === Routes ===
 const routes = require('./routes/web');
 app.use('/', routes);

@@ -271,23 +271,84 @@ router.get('/document-checklist', isLoggedIn, (req, res) => {
 
 // === SIMPAN DATA KE DATABASE ===
 router.post('/document-checklist', (req, res) => {
-  console.log('REQ BODY:', req.body); // Harus tampil object data
+  console.log('REQ BODY:', req.body);
 
-  const { jenis_pemohon, nama, nama_perusahaan, bidang_usaha, keterangan } = req.body || {};
-  if (![jenis_pemohon, nama, nama_perusahaan, bidang_usaha, keterangan].every(Boolean)) {
-    return res.status(400).send('Semua field wajib diisi.');
-  }
+  const {
+    jenis_pemohon,
+    nama,
+    nama_perusahaan,
+    bidang_usaha,
+    keterangan,
+    akte_pendirian_ptcv,
+    akta_perubahan_ptcv,
+    npwp_ptcv,
+    sk_menkumham_ptcv,
+    siup_nib,
+    tdp,
+    ktp_pengurus_ptcv,
+    npwp_pengurus_ptcv,
+    ktp_suami_istri,
+    npwp_pribadi,
+    kartu_keluarga,
+    akta_nikah,
+    laporan_keuangan,
+    invoice_pelanggan_kontrak_kerja,
+    sertifikat_shm_shgb,
+    imb,
+    pbb_terakhir,
+    summary_kredit,
+    hasil_resume_penilaian_kjpp,
+    buku_appraisal
+  } = req.body;
 
-  const insertQuery = `
+  // Pastikan data checkbox bernilai 1 atau 0
+  const toBool = (val) => (val ? 1 : 0);
+
+  const query = `
     INSERT INTO document_checklist 
-    (jenis_pemohon, nama, nama_perusahaan, bidang_usaha, keterangan, created_at)
-    VALUES (?, ?, ?, ?, ?, NOW())
+    (jenis_pemohon, nama, nama_perusahaan, bidang_usaha, keterangan, created_at,
+      akte_pendirian_ptcv, akta_perubahan_ptcv, npwp_ptcv, sk_menkumham_ptcv,
+      siup_nib, tdp, ktp_pengurus_ptcv, npwp_pengurus_ptcv, ktp_suami_istri,
+      npwp_pribadi, kartu_keluarga, akta_nikah, laporan_keuangan,
+      invoice_pelanggan_kontrak_kerja, sertifikat_shm_shgb, imb, pbb_terakhir,
+      summary_kredit, hasil_resume_penilaian_kjpp, buku_appraisal)
+    VALUES (?, ?, ?, ?, ?, NOW(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
-  db.query(insertQuery, [jenis_pemohon, nama, nama_perusahaan, bidang_usaha, keterangan], (err) => {
+
+  const values = [
+    jenis_pemohon,
+    nama,
+    nama_perusahaan,
+    bidang_usaha,
+    keterangan || '',
+    toBool(akte_pendirian_ptcv),
+    toBool(akta_perubahan_ptcv),
+    toBool(npwp_ptcv),
+    toBool(sk_menkumham_ptcv),
+    toBool(siup_nib),
+    toBool(tdp),
+    toBool(ktp_pengurus_ptcv),
+    toBool(npwp_pengurus_ptcv),
+    toBool(ktp_suami_istri),
+    toBool(npwp_pribadi),
+    toBool(kartu_keluarga),
+    toBool(akta_nikah),
+    toBool(laporan_keuangan),
+    toBool(invoice_pelanggan_kontrak_kerja),
+    toBool(sertifikat_shm_shgb),
+    toBool(imb),
+    toBool(pbb_terakhir),
+    toBool(summary_kredit),
+    toBool(hasil_resume_penilaian_kjpp),
+    toBool(buku_appraisal)
+  ];
+
+  db.query(query, values, (err, result) => {
     if (err) {
       console.error('DB ERROR:', err);
       return res.status(500).send('Gagal menyimpan ke database.');
     }
+    console.log('Data berhasil disimpan:', result.insertId);
     res.status(200).send('Data berhasil disimpan.');
   });
 });
@@ -309,6 +370,28 @@ router.get('/log-data', isLoggedIn, (req, res) => {
     });
   });
 });
+
+// === TAMPIL HALAMAN EDIT ===
+router.get('/document-checklist/:id/edit', (req, res) => {
+  const id = req.params.id;
+  const query = 'SELECT * FROM document_checklist WHERE id = ?';
+  db.query(query, [id], (err, results) => {
+    if (err) throw err;
+    if (results.length === 0) return res.send('Data tidak ditemukan');
+    res.render('documentchecklist', { editData: results[0], user: req.user });
+  });
+});
+
+// === HAPUS DATA ===
+router.post('/delete/:id', (req, res) => {
+  const id = req.params.id;
+  const query = 'DELETE FROM document_checklist WHERE id = ?';
+  db.query(query, [id], (err) => {
+    if (err) throw err;
+    res.redirect('/log-data');
+  });
+});
+
 
 // === HOME PAGE ===
 router.get('/home', (req, res) => {

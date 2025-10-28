@@ -321,9 +321,10 @@
             text-align: center;
         }
 
-        td input[type="checkbox"] {
+        td input[type="radio"] {
             display: block;
             margin: 0 auto;
+            align-items: center;
         }
 
         /* ===== BUTTONS ===== */
@@ -579,51 +580,67 @@
                                 </tr>
                                 <tr>
                                     <td>1</td>
-                                    <td>AKTE PENDIRIAN PT/CV</td>
-                                    <td><input type="checkbox"></td>
-                                    <td><input type="checkbox"></td>
+                                    <label>
+                                        <td>AKTA PENDIRIAN PT/CV</td>
+                                    </label>
+                                    <td><input type="radio" name="akte_pendirian_ptcv" value="1" /></td>
+                                    <td><input type="radio" name="akte_pendirian_ptcv" value="0" /></td>
                                 </tr>
                                 <tr>
                                     <td>2</td>
-                                    <td>AKTA PERUBAHAN PT/CV</td>
-                                    <td><input type="checkbox"></td>
-                                    <td><input type="checkbox"></td>
+                                    <label>
+                                        <td>AKTA PERUBAHAN PT/CV</td>
+                                    </label>
+                                    <td><input type="radio" name="akta_perubahan_ptcv" value="1" /></td>
+                                    <td><input type="radio" name="akta_perubahan_ptcv" value="0" /></td>
                                 </tr>
                                 <tr>
                                     <td>3</td>
-                                    <td>NPWP PT/CV</td>
-                                    <td><input type="checkbox"></td>
-                                    <td><input type="checkbox"></td>
+                                    <label>
+                                        <td>NPWP PT/CV</td>
+                                    </label>
+                                    <td><input type="radio" name="npwp_ptcv" value="1" /></td>
+                                    <td><input type="radio" name="npwp_ptcv" value="0" /></td>
                                 </tr>
                                 <tr>
                                     <td>4</td>
-                                    <td>SK MENKUMHAM PT/CV</td>
-                                    <td><input type="checkbox"></td>
-                                    <td><input type="checkbox"></td>
+                                    <label>
+                                        <td>SK MENKUMHAM PT/CV</td>
+                                    </label>
+                                    <td><input type="radio" name="sk_menkumham_ptcv" value="1" /></td>
+                                    <td><input type="radio" name="sk_menkumham_ptcv" value="0" /></td>
                                 </tr>
                                 <tr>
                                     <td>5</td>
-                                    <td>SIUP/NIB</td>
-                                    <td><input type="checkbox"></td>
-                                    <td><input type="checkbox"></td>
+                                    <label>
+                                        <td>SIUP/NIB</td>
+                                    </label>
+                                    <td><input type="radio" name="siup_nib" value="1" /></td>
+                                    <td><input type="radio" name="siup_nib" value="0" /></td>
                                 </tr>
                                 <tr>
                                     <td>6</td>
-                                    <td>TDP</td>
-                                    <td><input type="checkbox"></td>
-                                    <td><input type="checkbox"></td>
+                                    <label>
+                                        <td>TDP</td>
+                                    </label>
+                                    <td><input type="radio" name="tdp" value="1" /></td>
+                                    <td><input type="radio" name="tdp" value="0" /></td>
                                 </tr>
                                 <tr>
                                     <td>7</td>
-                                    <td>KTP SELURUH PENGURUS PT/CV</td>
-                                    <td><input type="checkbox"></td>
-                                    <td><input type="checkbox"></td>
+                                    <label>
+                                        <td>KTP SELURUH PENGURUS PT/CV</td>
+                                    </label>
+                                    <td><input type="radio" name="ktp_pengurus_ptcv" value="1" /></td>
+                                    <td><input type="radio" name="ktp_pengurus_ptcv" value="0" /></td>
                                 </tr>
                                 <tr>
                                     <td>8</td>
-                                    <td>NPWP PENGURUS PT/CV</td>
-                                    <td><input type="checkbox"></td>
-                                    <td><input type="checkbox"></td>
+                                    <label>
+                                        <td>NPWP PENGURUS PT/CV</td>
+                                    </label>
+                                    <td><input type="radio" name="npwp_pengurus_ptcv" value="1" /></td>
+                                    <td><input type="radio" name="npwp_pengurus_ptcv" value="0" /></td>
                                 </tr>
 
                                 <!-- KEUANGAN -->
@@ -635,15 +652,19 @@
                                 </tr>
                                 <tr>
                                     <td>1</td>
-                                    <td>LAPORAN KEUANGAN / REK KORAN</td>
-                                    <td><input type="checkbox"></td>
-                                    <td><input type="checkbox"></td>
+                                    <label>
+                                        <td>LAPORAN KEUANGAN / REK KORAN</td>
+                                    </label>
+                                    <td><input type="radio" name="laporan_keuangan" value="1" /></td>
+                                    <td><input type="radio" name="laporan_keuangan" value="0" /></td>
                                 </tr>
                                 <tr>
                                     <td>2</td>
-                                    <td>INVOICE PELANGGAN / KONTRAK KERJA</td>
-                                    <td><input type="checkbox"></td>
-                                    <td><input type="checkbox"></td>
+                                    <label>
+                                        <td>INVOICE PELANGGAN / KONTRAK KERJA</td>
+                                    </label>
+                                    <td><input type="radio" name="invoice_pelanggan_kontrak_kerja" value="1" /></td>
+                                    <td><input type="radio" name="invoice_pelanggan_kontrak_kerja" value="0" /></td>
                                 </tr>
 
                                 <!-- JAMINAN -->
@@ -655,21 +676,27 @@
                                 </tr>
                                 <tr>
                                     <td>1</td>
-                                    <td>SERTIFIKAT (SHM ATAU SHGB)</td>
-                                    <td><input type="checkbox"></td>
-                                    <td><input type="checkbox"></td>
+                                    <label>
+                                        <td>SERTIFIKAT (SHM ATAU SHGB)</td>
+                                    </label>
+                                    <td><input type="radio" name="sertifikat_shm_shgb" value="1" /></td>
+                                    <td><input type="radio" name="sertifikat_shm_shgb" value="0" /></td>
                                 </tr>
                                 <tr>
                                     <td>2</td>
-                                    <td>IMB</td>
-                                    <td><input type="checkbox"></td>
-                                    <td><input type="checkbox"></td>
+                                    <label>
+                                        <td>IMB</td>
+                                    </label>
+                                    <td><input type="radio" name="imb" value="1" /></td>
+                                    <td><input type="radio" name="imb" value="0" /></td>
                                 </tr>
                                 <tr>
                                     <td>3</td>
-                                    <td>PBB TAHUN TERAKHIR</td>
-                                    <td><input type="checkbox"></td>
-                                    <td><input type="checkbox"></td>
+                                    <label>
+                                        <td>PBB TAHUN TERAKHIR</td>
+                                    </label>
+                                    <td><input type="radio" name="pbb_terakhir" value="1" /></td>
+                                    <td><input type="radio" name="pbb_terakhir" value="0" /></td>
                                 </tr>
 
                                 <!-- LAIN-LAIN -->
@@ -682,21 +709,27 @@
                                 </tr>
                                 <tr>
                                     <td>1</td>
-                                    <td>SUMMARY KREDIT</td>
-                                    <td><input type="checkbox"></td>
-                                    <td><input type="checkbox"></td>
+                                    <label>
+                                        <td>SUMMARY KREDIT</td>
+                                    </label>
+                                    <td><input type="radio" name="summary_kredit" value="1" /></td>
+                                    <td><input type="radio" name="summary_kredit" value="0" /></td>
                                 </tr>
                                 <tr>
                                     <td>2</td>
-                                    <td>HASIL RESUME PENILAIAN JAMINAN (KJPP)</td>
-                                    <td><input type="checkbox"></td>
-                                    <td><input type="checkbox"></td>
+                                    <label>
+                                        <td>HASIL RESUME PENILAIAN JAMINAN (KJPP)</td>
+                                    </label>
+                                    <td><input type="radio" name="hasil_resume_penilaian_kjpp" value="1" /></td>
+                                    <td><input type="radio" name="hasil_resume_penilaian_kjpp" value="0" /></td>
                                 </tr>
                                 <tr>
                                     <td>3</td>
-                                    <td>BUKU APPRAISAL</td>
-                                    <td><input type="checkbox"></td>
-                                    <td><input type="checkbox"></td>
+                                    <label>
+                                        <td>BUKU APPRAISAL</td>
+                                    </label>
+                                    <td><input type="radio" name="buku_appraisal" value="1" /></td>
+                                    <td><input type="radio" name="buku_appraisal" value="0" /></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -732,39 +765,51 @@
                         </tr>
                         <tr>
                             <td>1</td>
-                            <td>KTP SUAMI/ ISTRI</td>
-                            <td><input type="checkbox"></td>
-                            <td><input type="checkbox"></td>
+                            <label>
+                                <td>KTP SUAMI/ ISTRI</td>
+                            </label>
+                            <td><input type="radio" name="ktp_suami_istri" value="1" /></td>
+                            <td><input type="radio" name="ktp_suami_istri" value="0" /></td>
                         </tr>
                         <tr>
                             <td>2</td>
-                            <td>NPWP</td>
-                            <td><input type="checkbox"></td>
-                            <td><input type="checkbox"></td>
+                            <label>
+                                <td>NPWP</td>
+                            </label>
+                            <td><input type="radio" name="npwp_pribadi" value="1" /></td>
+                            <td><input type="radio" name="npwp_pribadi" value="0" /></td>
                         </tr>
                         <tr>
                             <td>3</td>
-                            <td>KARTU KELUARGA</td>
-                            <td><input type="checkbox"></td>
-                            <td><input type="checkbox"></td>
+                            <label>
+                                <td>KARTU KELUARGA</td>
+                            </label>
+                            <td><input type="radio" name="kartu_keluarga" value="1" /></td>
+                            <td><input type="radio" name="kartu_keluarga" value="0" /></td>
                         </tr>
                         <tr>
                             <td>4</td>
-                            <td>AKTA NIKAH</td>
-                            <td><input type="checkbox"></td>
-                            <td><input type="checkbox"></td>
+                            <label>
+                                <td>AKTA NIKAH</td>
+                            </label>
+                            <td><input type="radio" name="akta_nikah" value="1" /></td>
+                            <td><input type="radio" name="akta_nikah" value="0" /></td>
                         </tr>
                         <tr>
                             <td>5</td>
-                            <td>SIUP/NIB</td>
-                            <td><input type="checkbox"></td>
-                            <td><input type="checkbox"></td>
+                            <label>
+                                <td>SIUP/ NIB</td>
+                            </label>
+                            <td><input type="radio" name="siup_nib" value="1" /></td>
+                            <td><input type="radio" name="siup_nib" value="0" /></td>
                         </tr>
                         <tr>
                             <td>6</td>
-                            <td>TDP</td>
-                            <td><input type="checkbox"></td>
-                            <td><input type="checkbox"></td>
+                            <label>
+                                <td>TDP</td>
+                            </label>
+                            <td><input type="radio" name="tdp" value="1" /></td>
+                            <td><input type="radio" name="tdp" value="0" /></td>
                         </tr>
 
                         <!-- KEUANGAN -->
@@ -776,15 +821,19 @@
                         </tr>
                         <tr>
                             <td>1</td>
-                            <td>LAPORAN KEUANGAN / REK KORAN</td>
-                            <td><input type="checkbox"></td>
-                            <td><input type="checkbox"></td>
+                            <label>
+                                <td>LAPORAN KEUANGAN / REK KORAN</td>
+                            </label>
+                            <td><input type="radio" name="laporan_keuangan" value="1" /></td>
+                            <td><input type="radio" name="laporan_keuangan" value="0" /></td>
                         </tr>
                         <tr>
                             <td>2</td>
-                            <td>INVOICE PELANGGAN / KONTRAK KERJA</td>
-                            <td><input type="checkbox"></td>
-                            <td><input type="checkbox"></td>
+                            <label>
+                                <td>INVOICE PELANGGAN / KONTRAK KERJA</td>
+                            </label>
+                            <td><input type="radio" name="invoice_pelanggan_kontrak_kerja" value="1" /></td>
+                            <td><input type="radio" name="invoice_pelanggan_kontrak_kerja" value="0" /></td>
                         </tr>
 
                         <!-- JAMINAN -->
@@ -796,21 +845,27 @@
                         </tr>
                         <tr>
                             <td>1</td>
-                            <td>SERTIFIKAT (SHM ATAU SHGB)</td>
-                            <td><input type="checkbox"></td>
-                            <td><input type="checkbox"></td>
+                            <label>
+                                <td>SERTIFIKAT (SHM ATAU SHGB)</td>
+                            </label>
+                            <td><input type="radio" name="sertifikat_shm_shgb" value="1" /></td>
+                            <td><input type="radio" name="sertifikat_shm_shgb" value="0" /></td>
                         </tr>
                         <tr>
                             <td>2</td>
-                            <td>IMB</td>
-                            <td><input type="checkbox"></td>
-                            <td><input type="checkbox"></td>
+                            <label>
+                                <td>IMB</td>
+                            </label>
+                            <td><input type="radio" name="imb" value="1" /></td>
+                            <td><input type="radio" name="imb" value="0" /></td>
                         </tr>
                         <tr>
                             <td>3</td>
-                            <td>PBB TAHUN TERAKHIR</td>
-                            <td><input type="checkbox"></td>
-                            <td><input type="checkbox"></td>
+                            <label>
+                                <td>PBB TAHUN TERAKHIR</td>
+                            </label>
+                            <td><input type="radio" name="pbb_terakhir" value="1" /></td>
+                            <td><input type="radio" name="pbb_terakhir" value="0" /></td>
                         </tr>
 
                         <!-- LAIN-LAIN -->
@@ -823,21 +878,27 @@
                         </tr>
                         <tr>
                             <td>1</td>
-                            <td>SUMMARY KREDIT</td>
-                            <td><input type="checkbox"></td>
-                            <td><input type="checkbox"></td>
+                            <label>
+                                <td>SUMMARY KREDIT</td>
+                            </label>
+                            <td><input type="radio" name="summary_kredit" value="1" /></td>
+                            <td><input type="radio" name="summary_kredit" value="0" /></td>
                         </tr>
                         <tr>
                             <td>2</td>
-                            <td>HASIL RESUME PENILAIAN JAMINAN (KJPP)</td>
-                            <td><input type="checkbox"></td>
-                            <td><input type="checkbox"></td>
+                            <label>
+                                <td>HASIL RESUME PENILAIAN JAMINAN (KJPP)</td>
+                            </label>
+                            <td><input type="radio" name="hasil_resume_penilaian_kjpp" value="1" /></td>
+                            <td><input type="radio" name="hasil_resume_penilaian_kjpp" value="0" /></td>
                         </tr>
                         <tr>
                             <td>3</td>
-                            <td>BUKU APPRAISAL</td>
-                            <td><input type="checkbox"></td>
-                            <td><input type="checkbox"></td>
+                            <label>
+                                <td>BUKU APPRAISAL</td>
+                            </label>
+                            <td><input type="radio" name="buku_appraisal" value="1" /></td>
+                            <td><input type="radio" name="buku_appraisal" value="0" /></td>
                         </tr>
                     </tbody>
                 </table>
@@ -885,19 +946,16 @@
             const goLog = document.getElementById("goLog");
 
             goDashboard.addEventListener("click", () => {
-                window.location.href = "/dashboard"; // ganti sesuai route dashboard kamu
+                window.location.href = "/dashboard";
             });
-
             goChecklist.addEventListener("click", () => {
-                window.location.href = "/document-checklist"; // ganti sesuai route checklist
+                window.location.href = "/document-checklist";
             });
-
             goUpload.addEventListener("click", () => {
-                window.location.href = "/document-upload"; // ganti sesuai route upload
+                window.location.href = "/document-upload";
             });
-
             goLog.addEventListener("click", () => {
-                window.location.href = "/log-data"; // ganti sesuai route Log Data
+                window.location.href = "/log-data";
             });
 
             // === EVENT GANTI JENIS PEMOHON ===
@@ -957,20 +1015,20 @@
 
             // === STATUS LOGIC PERUSAHAAN ===
             const table = document.querySelector("#tableSection table");
-            const checkboxes = table.querySelectorAll('input[type="checkbox"]');
+            const checkboxes = table.querySelectorAll('input[type="radio"]');
             const statusCell = table.querySelector("td[rowspan]");
             const saveBtn = document.getElementById("saveChecklist");
 
             // === STATUS LOGIC PERORANGAN ===
             const tablePerorangan = document.querySelector("#tableSectionPerorangan table");
-            const checkboxesPerorangan = tablePerorangan.querySelectorAll('input[type="checkbox"]');
+            const checkboxesPerorangan = tablePerorangan.querySelectorAll('input[type="radio"]');
             const statusCellPerorangan = tablePerorangan.querySelector("td[rowspan]");
             const saveBtnPerorangan = document.getElementById("saveChecklistPerorangan");
 
             // === UPDATE STATUS FUNGSI UMUM ===
             function updateStatus(table, statusCell) {
                 const rows = [...table.querySelectorAll("tbody tr")].filter(r =>
-                    r.querySelector('input[type="checkbox"]')
+                    r.querySelector('input[type="radio"]')
                 );
 
                 let adaChecked = 0;
@@ -979,10 +1037,10 @@
                 let totalCeklis = 0;
 
                 rows.forEach(row => {
-                    const [ada, tidakAda] = row.querySelectorAll('input[type="checkbox"]');
-                    if (ada.checked) adaChecked++;
-                    if (tidakAda.checked) tidakAdaChecked++;
-                    if (ada.checked || tidakAda.checked) totalCeklis++;
+                    const [ada, tidakAda] = row.querySelectorAll('input[type="radio"]');
+                    if (ada && ada.checked) adaChecked++;
+                    if (tidakAda && tidakAda.checked) tidakAdaChecked++;
+                    if ((ada && ada.checked) || (tidakAda && tidakAda.checked)) totalCeklis++;
                 });
 
                 let resultHTML = "";
@@ -992,36 +1050,31 @@
                 <div class="status-result pending">
                     <i class="fa-solid fa-hourglass-half"></i>
                     <span>PENDING</span>
-                </div>
-            `;
+                </div>`;
                 } else if (adaChecked === totalRows) {
                     resultHTML = `
                 <div class="status-result success">
                     <i class="fa-solid fa-circle-check"></i>
                     <span>LENGKAP</span>
-                </div>
-            `;
+                </div>`;
                 } else if (tidakAdaChecked === totalRows) {
                     resultHTML = `
                 <div class="status-result failed">
                     <i class="fa-solid fa-circle-xmark"></i>
                     <span>TIDAK LENGKAP</span>
-                </div>
-            `;
+                </div>`;
                 } else if (adaChecked > 0 && tidakAdaChecked > 0 && totalCeklis === totalRows) {
                     resultHTML = `
                 <div class="status-result failed">
                     <i class="fa-solid fa-circle-xmark"></i>
                     <span>TIDAK LENGKAP</span>
-                </div>
-            `;
+                </div>`;
                 } else {
                     resultHTML = `
                 <div class="status-result pending">
                     <i class="fa-solid fa-hourglass-half"></i>
                     <span>PENDING</span>
-                </div>
-            `;
+                </div>`;
                 }
 
                 statusCell.innerHTML = resultHTML;
@@ -1037,6 +1090,30 @@
                 cb.addEventListener("change", () => updateStatus(tablePerorangan, statusCellPerorangan))
             );
 
+            // === BIAR RADIO BISA DI-UNSELECT ===
+            function makeRadioUnselectable(radioList) {
+                radioList.forEach(radio => {
+                    radio.addEventListener("mousedown", function (e) {
+                        if (this.checked) {
+                            this.dataset.wasChecked = "true";
+                        } else {
+                            this.dataset.wasChecked = "false";
+                        }
+                    });
+
+                    radio.addEventListener("click", function (e) {
+                        if (this.dataset.wasChecked === "true") {
+                            this.checked = false;
+                            this.dispatchEvent(new Event("change")); // update status otomatis
+                        }
+                    });
+                });
+            }
+
+            // Terapkan ke semua radio di kedua tabel
+            makeRadioUnselectable(checkboxes);
+            makeRadioUnselectable(checkboxesPerorangan);
+
             // === RESET TOMBOL (PERUSAHAAN) ===
             addNewBtn.addEventListener("click", function (e) {
                 e.preventDefault();
@@ -1044,14 +1121,13 @@
                 jenisPemohon.value = "";
                 formPerusahaan.classList.add("hidden");
                 formPerorangan.classList.add("hidden");
-                const allCheckboxes = table.querySelectorAll('input[type="checkbox"]');
+                const allCheckboxes = table.querySelectorAll('input[type="radio"]');
                 allCheckboxes.forEach(cb => (cb.checked = false));
                 statusCell.innerHTML = `
             <div class="status-result pending">
                 <i class="fa-solid fa-hourglass-half"></i>
                 <span>PENDING</span>
-            </div>
-        `;
+            </div>`;
                 tableSection.classList.add("hidden");
             });
 
@@ -1062,14 +1138,13 @@
                 jenisPemohon.value = "";
                 formPerorangan.classList.add("hidden");
                 formPerusahaan.classList.add("hidden");
-                const allCheckboxes = tablePerorangan.querySelectorAll('input[type="checkbox"]');
+                const allCheckboxes = tablePerorangan.querySelectorAll('input[type="radio"]');
                 allCheckboxes.forEach(cb => (cb.checked = false));
                 statusCellPerorangan.innerHTML = `
             <div class="status-result pending">
                 <i class="fa-solid fa-hourglass-half"></i>
                 <span>PENDING</span>
-            </div>
-        `;
+            </div>`;
                 tableSectionPerorangan.classList.add("hidden");
             });
 
@@ -1088,6 +1163,12 @@
                     return;
                 }
 
+                // 🔸 Ambil semua nilai radio yang dipilih
+                const formData = {};
+                table.querySelectorAll('input[type="radio"]:checked').forEach(radio => {
+                    formData[radio.name] = radio.value;
+                });
+
                 try {
                     const response = await fetch("/document-checklist", {
                         method: "POST",
@@ -1098,6 +1179,7 @@
                             nama_perusahaan: namaPerusahaanVal,
                             bidang_usaha: bidangUsahaVal,
                             keterangan: keterangan || "-",
+                            ...formData, // ← kirim semua data radio
                         }),
                     });
 
@@ -1129,6 +1211,12 @@
                     return;
                 }
 
+                // 🔸 Ambil semua nilai radio yang dipilih
+                const formData = {};
+                tablePerorangan.querySelectorAll('input[type="radio"]:checked').forEach(radio => {
+                    formData[radio.name] = radio.value;
+                });
+
                 try {
                     const response = await fetch("/document-checklist", {
                         method: "POST",
@@ -1139,6 +1227,7 @@
                             nama_perusahaan: namaPerusahaanVal,
                             bidang_usaha: bidangUsahaVal,
                             keterangan: keterangan || "-",
+                            ...formData, // ← kirim semua data radio
                         }),
                     });
 

@@ -238,7 +238,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
-            font-size: 15px;
+            font-size: 14px;
         }
 
         th,
@@ -252,10 +252,25 @@
             background: #f9fafb;
             color: #333333;
             font-weight: 600;
+            text-align: center;
         }
 
-        tr:nth-child(even) {
-            background: #f9fafb;
+        tbody tr {
+            background: #ffffff;
+        }
+
+        td:last-child {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .status-result {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-weight: 500;
+            font-size: 13px;
         }
 
         .pagination {
@@ -276,6 +291,70 @@
         .pagination button.active {
             background: #111827;
             color: white;
+        }
+
+        /* ===== STATUS ICON ===== */
+        .status-result {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+            font-size: 13px;
+        }
+
+        .status-result i {
+            font-size: 15px;
+        }
+
+        /* Warna status */
+        .status-result.pending {
+            color: #f59e0b;
+        }
+
+        .status-result.success {
+            color: #16a34a;
+        }
+
+        .status-result.failed {
+            color: #dc2626;
+        }
+
+        .status-result.unknown {
+            color: #9ca3af;
+        }
+
+        /* ===== AKSI (EDIT & DELETE) ===== */
+        .action-buttons {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .action-buttons a,
+        .action-buttons button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            font-size: 16px;
+            margin: 0 4px;
+        }
+
+        .edit-icon {
+            color: #2563eb;
+            transition: 0.3s;
+        }
+
+        .edit-icon:hover {
+            color: #1d4ed8;
+        }
+
+        .delete-icon {
+            color: #dc2626;
+            transition: 0.3s;
+        }
+
+        .delete-icon:hover {
+            color: #b91c1c;
         }
 
         footer {
@@ -369,6 +448,7 @@
                             <th>Nama Perusahaan</th>
                             <th>Bidang Usaha</th>
                             <th>Keterangan</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -387,7 +467,42 @@
                                     <%= row.bidang_usaha %>
                                 </td>
                                 <td>
-                                    <%= row.keterangan %>
+                                    <% if (row.keterangan && row.keterangan.toLowerCase()==='pending' ) { %>
+                                        <div class="status-result pending">
+                                            <i class="fa-solid fa-hourglass-half"></i>
+                                            <span>PENDING</span>
+                                        </div>
+                                        <% } else if (row.keterangan && row.keterangan.toLowerCase()==='lengkap' ) { %>
+                                            <div class="status-result success">
+                                                <i class="fa-solid fa-circle-check"></i>
+                                                <span>LENGKAP</span>
+                                            </div>
+                                            <% } else if (row.keterangan &&
+                                                row.keterangan.toLowerCase()==='tidak lengkap' ) { %>
+                                                <div class="status-result failed">
+                                                    <i class="fa-solid fa-circle-xmark"></i>
+                                                    <span>TIDAK LENGKAP</span>
+                                                </div>
+                                                <% } else { %>
+                                                    <div class="status-result unknown">
+                                                        <i class="fa-solid fa-question-circle"></i>
+                                                        <span>-</span>
+                                                    </div>
+                                                    <% } %>
+                                </td>
+                                <td class="action-buttons">
+                                    <!-- ✅ Tombol edit -->
+                                    <a href="/document-checklist/<%= row.id %>/edit" title="Edit Data">
+                                        <i class="fa-solid fa-pen-to-square edit-icon"></i>
+                                    </a>
+
+                                    <!-- ✅ Tombol delete -->
+                                    <form action="/delete/<%= row.id %>" method="POST" style="display:inline;"
+                                        onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
+                                        <button type="submit" class="delete-btn" title="Hapus Data">
+                                            <i class="fa-solid fa-trash delete-icon"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                             <% }) %>
@@ -423,7 +538,7 @@
         });
 
         // === PAGINATION + MINIMAL 6 ROWS ===
-        const rowsPerPage = 8; // ⬅️ minimal 6 baris per halaman
+        const rowsPerPage = 7; // ⬅️ minimal 6 baris per halaman
         const table = document.getElementById("logTable");
         const tbody = table.querySelector("tbody");
         const pagination = document.getElementById("pagination");
