@@ -326,15 +326,6 @@
 
         <div class="nav">
           <div class="nav-item" id="goMain">Dashboard</div>
-          <div class="nav-item" id="marketingToggle" style="display: flex; justify-content: space-between;">
-            <span>Laporan</span>
-            <span>&#9662;</span>
-          </div>
-          <div id="marketingMenu" class="hidden" style="padding-left: 16px;">
-            <div class="nav-item" id="goProspect">Document Checklist</div>
-            <div class="nav-item">Document Upload</div>
-            <div class="nav-item" id="goLog">Log Data</div>
-          </div>
           <div class="nav-item">Notes</div>
         </div>
       </aside>
@@ -353,11 +344,15 @@
           </div>
           <div class="card-item">
             <span>Document Upload</span>
-            <span>&#9998;</span>
+            <span id="editUpload" style="cursor: pointer;">&#9998;</span>
           </div>
           <div class="card-item">
             <span>Log Data</span>
             <span id="editLog" style="cursor: pointer;">&#9998;</span>
+          </div>
+          <div class="card-item">
+            <span>Pipeline</span>
+            <span id="editPipeline" style="cursor: pointer;">&#9998;</span>
           </div>
         </div>
       </div>
@@ -378,31 +373,25 @@
             menu.classList.add("hidden");
           }
         });
-
-        const marketingToggle = document.getElementById("marketingToggle");
-        const marketingMenu = document.getElementById("marketingMenu");
-        marketingToggle.addEventListener("click", () => {
-          marketingMenu.classList.toggle("hidden");
-        });
-
-        document.getElementById("goProspect").addEventListener("click", function () {
-          window.location.href = "/document-checklist";
-        });
-
-        document.getElementById("goLog").addEventListener("click", function () {
-          window.location.href = "/log-data";
-        });
-
+        
         document.getElementById("goMain").addEventListener("click", function () {
           window.location.href = "/dashboard";
         });
-
+        
         document.getElementById("editProspect").addEventListener("click", function () {
           window.location.href = "/document-checklist";
         });
 
         document.getElementById("editLog").addEventListener("click", function () {
           window.location.href = "/log-data";
+        });
+
+        document.getElementById("editUpload").addEventListener("click", function () {
+          window.location.href = "/document-upload";
+        });
+
+        document.getElementById("editPipeline").addEventListener("click", function () {
+          window.location.href = "/pipeline";
         });
       });
     </script>

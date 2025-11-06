@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document Files</title>
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif
+        }
+
+        body {
+            background: #fff;
+            color: #333
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh
+        }
+
+        /* Header */
+        header {
+            background: #fff;
+            padding: 12px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e5e7eb
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .logo img {
+            margin-top: 5px;
+            height: 70px;
+            object-fit: contain
+        }
+
+        .user-circle {
+            width: 32px;
+            height: 32px;
+            background: #9ca3af;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer
+        }
+
+        .user-dropdown {
+            position: relative;
+            display: inline-block
+        }
+
+        .user-menu {
+            position: absolute;
+            top: 40px;
+            right: 0;
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
+            padding: 8px 0;
+            min-width: 150px;
+            z-index: 10
+        }
+
+        .user-menu a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px
+        }
+
+        .user-menu a:hover {
+            background: #f3f4f6
+        }
+
+        .user-menu a.delete-account {
+            color: #dc3545;
+            font-weight: 500
+        }
+
+        /* Main */
+        .main {
+            flex: 1;
+            display: flex;
+            background: #fff
+        }
+
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            gap: 26px;
+            margin: 0;
+            padding: 0;
+            margin-left: 680px
+        }
+
+        .main-nav ul li a {
+            text-decoration: none;
+            color: #111827;
+            font-weight: 500;
+            font-size: 14px;
+            padding: 8px 14px;
+            border-radius: 6px;
+            transition: .3s ease
+        }
+
+        .main-nav ul li a:hover {
+            color: #fff;
+            background: #111827
+        }
+
+        .main-nav ul li a.active {
+            background: #111827;
+            color: #fff
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #f9fafb;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 16px;
+            margin: 24px;
+            height: 455px;
+            overflow-y: auto
+        }
+
+        .sidebar .name {
+            margin-top: 12px;
+            font-size: 16px;
+            font-weight: 600
+        }
+
+        .sidebar .nav {
+            margin-top: 24px;
+            width: 100%
+        }
+
+        .sidebar .nav-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 11px !important;
+            text-align: left;
+            width: 100%;
+            padding-left: 8px;
+            cursor: pointer;
+            line-height: 1.3;
+            background: none
+        }
+
+        #marketingToggle span {
+            font-size: 11px !important;
+            line-height: 1.3
+        }
+
+        .sidebar form {
+            display: flex;
+            flex-direction: column;
+            align-items: center
+        }
+
+        .sidebar form label img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            aspect-ratio: 1/1;
+            border: 2px solid #e5e7eb;
+            display: block
+        }
+
+        .hidden {
+            display: none
+        }
+
+        .content {
+            flex: 1;
+            padding: 40px
+        }
+
+        /* Page title */
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #0a0b0b;
+            margin-bottom: 14px
+        }
+
+        .page-title i {
+            color: #9ca3af;
+            font-size: 15px
+        }
+
+        /* New button area (sama seperti halaman Document Upload) */
+        .new-area {
+            margin: 10px 0 20px;
+            margin-top: 25px;
+        }
+
+        .new-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #3f4751;
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            padding: 12px 18px;
+            font-weight: 600;
+            cursor: pointer
+        }
+
+        .new-btn .plus {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(255, 255, 255, .7);
+            line-height: 1
+        }
+
+        /* Modal upload */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .45);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50
+        }
+
+        .modal-backdrop.hidden {
+            display: none !important
+        }
+
+        .modal {
+            width: min(520px, 92vw);
+            background: #111827;
+            color: #e5e7eb;
+            border-radius: 16px;
+            padding: 22px 20px 18px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .4)
+        }
+
+        .modal h3 {
+            font-weight: 600;
+            margin-bottom: 14px
+        }
+
+        .upload-tile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #0b1220;
+            border: 1px dashed #374151;
+            border-radius: 12px;
+            padding: 16px 14px;
+            cursor: pointer;
+            transition: .2s ease
+        }
+
+        .upload-tile:hover {
+            background: #0e1626
+        }
+
+        .upload-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: #172036;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px
+        }
+
+        .upload-text {
+            display: flex;
+            flex-direction: column
+        }
+
+        .upload-text b {
+            color: #fff;
+            font-size: 14px;
+            line-height: 1.1
+        }
+
+        .upload-text span {
+            color: #9aa5b1;
+            font-size: 12px
+        }
+
+        .modal .actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 16px
+        }
+
+        .btn-modal {
+            border: none;
+            border-radius: 10px;
+            padding: 10px 16px;
+            font-weight: 600;
+            cursor: pointer
+        }
+
+        .btn-secondary {
+            background: #374151;
+            color: #e5e7eb
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: #fff
+        }
+
+        /* === Files grid (max 8 per page) === */
+        .files-section {
+            margin-top: 12px
+        }
+
+        .file-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .file-card {
+            position: relative;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            background: #fff;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 240px;
+            /* ✅ tinggi tetap */
+            overflow: hidden;
+            /* sembunyikan kelebihan konten */
+            box-sizing: border-box;
+        }
+
+        .file-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px
+        }
+
+        .file-name {
+            font-weight: 600;
+            font-size: 13px;
+            line-height: 1.2;
+            display: -webkit-box;
+            line-clamp: 2;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden
+        }
+
+        .kebab {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 4px 6px;
+            border-radius: 8px
+        }
+
+        .kebab:hover {
+            background: #f3f4f6
+        }
+
+        .card-menu {
+            position: absolute;
+            top: 40px;
+            right: 10px;
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+            min-width: 160px;
+            z-index: 30
+        }
+
+        .card-menu.hidden {
+            display: none
+        }
+
+        .card-menu a,
+        .card-menu button {
+            display: block;
+            width: 100%;
+            text-align: left;
+            background: transparent;
+            border: none;
+            padding: 10px 12px;
+            font-size: 14px;
+            cursor: pointer
+        }
+
+        .card-menu a:hover,
+        .card-menu button:hover {
+            background: #f9fafb
+        }
+
+        /* preview */
+        .file-preview {
+            flex: 1;
+            border: 1px dashed #e5e7eb;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            min-height: 220px;
+            /* ✅ tinggi area preview seragam */
+            background: #fafafa;
+        }
+
+        .file-preview iframe,
+        .file-preview embed {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .file-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .file-preview .pdf {
+            width: 100%;
+            height: 100%
+        }
+
+        .file-icon {
+            font-size: 40px;
+            color: #6b7280
+        }
+
+        /* pagination */
+        .files-pagination {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            margin-top: 16px;
+        }
+
+        .files-pagination a,
+        .files-pagination span {
+            border: 1px solid #d1d5db;
+            padding: 6px 10px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #111827;
+        }
+
+        .files-pagination span {
+            border: 1px solid #d1d5db;
+            padding: 6px 10px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #111827
+        }
+
+        .files-pagination .active {
+            background: #111827;
+            color: #fff;
+            border-color: #111827
+        }
+
+        /* responsive */
+        @media (max-width:1024px) {
+            .file-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr))
+            }
+        }
+
+        @media (max-width:768px) {
+            .file-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr))
+            }
+        }
+
+        @media (max-width:480px) {
+            .file-grid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        /* === Fullscreen Preview seperti Google Drive === */
+        /* === Fullscreen Preview seperti Google Drive (tinggi penuh) === */
+        .preview-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        .preview-backdrop.hidden {
+            display: none;
+        }
+
+        /* paksa kontainer setinggi viewport */
+        .preview-container {
+            position: relative;
+            width: min(96vw, 1280px);
+            height: 92vh;
+            /* ⬅️ dulu max-height, sekarang height tetap */
+            background: #111;
+            /* hitam agar dok putih kontras */
+            border-radius: 12px;
+            overflow: hidden;
+            /* isi tetap di dalam */
+            box-shadow: 0 20px 80px rgba(0, 0, 0, .4);
+            display: flex;
+        }
+
+        #previewContent {
+            flex: 1;
+            height: 100%;
+            overflow: auto;
+            /* kalau PDF/dokumen lebih panjang, bisa discroll */
+            background: #111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #previewContent img,
+        #previewContent iframe,
+        #previewContent embed {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            /* gambar/preview skala proporsional */
+            border: none;
+        }
+
+        /* tombol close */
+        .close-preview {
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .95);
+            border: none;
+            cursor: pointer;
+            color: #111;
+            font-size: 24px;
+            line-height: 1;
+            box-shadow: 0 0 6px rgba(0, 0, 0, .35);
+        }
+
+        .close-preview:hover {
+            background: #f3f4f6;
+        }
+
+        /* responsive kecil */
+        @media (max-width:768px) {
+            .preview-container {
+                width: 98vw;
+                height: 94vh;
+            }
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: #fff;
+            text-align: left;
+            padding: 32px 24px;
+            font-size: 13px;
+            min-height: 80px
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+            <div class="logo">
+                <img src="/img/koperasi-jatim-capital-logo.png" alt="Logo Koperasi Berkembang Bersama Kami">
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="/dashboard">Dashboard</a></li>
+                    <li><a href="/login">Log In</a></li>
+                    <li><a href="/signup">Sign Up</a></li>
+                </ul>
+            </nav>
+
+            <div class="user-dropdown">
+                <div class="user-circle" id="userMenuToggle">
+                    <%= user.first_name.charAt(0).toUpperCase() %>
+                </div>
+                <div class="user-menu hidden" id="userMenu">
+                    <a href="/logout"><i class="fa-solid fa-right-from-bracket" style="color:#dc3545;"></i> Logout</a>
+                    <form action="/delete-account" method="POST"
+                        onsubmit="return confirm('Apakah Anda yakin ingin menghapus akun Anda?')" style="margin:0;">
+                        <button type="submit" class="delete-account"
+                            style="background:none;border:none;width:100%;text-align:left;padding:8px 16px;color:#dc3545;font-weight:500;display:flex;align-items:center;gap:8px;cursor:pointer;">
+                            <i class="fa-solid fa-trash"></i> Delete Account
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </header>
+
+        <div class="main">
+            <aside class="sidebar">
+                <form action="/upload-profile" method="POST" enctype="multipart/form-data">
+                    <% const profileImage=user.profile_picture && user.profile_picture.trim() !=='' ?
+                        user.profile_picture : '/img/profile.png' ; %>
+                        <label for="profileUpload">
+                            <img src="<%= profileImage %>" alt="Profile" onerror="this.src='/img/profile.png';" />
+                        </label>
+                        <input id="profileUpload" type="file" name="profile_picture" style="display:none;"
+                            onchange="this.form.submit()" />
+                </form>
+
+                <div class="name">
+                    <%= user.first_name %>
+                        <%= user.last_name %>
+                </div>
+
+                <div class="nav">
+                    <div class="nav-item" id="goMain">Dashboard</div>
+                    <div class="nav-item">Notes</div>
+                </div>
+            </aside>
+
+            <div class="content">
+                <div class="page-title">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Document Files</span>
+                </div>
+
+                <!-- NEW button (persis seperti halaman Document Upload) -->
+                <div class="new-area">
+                    <button id="btnNewFile" class="new-btn" type="button">
+                        <span class="plus">+</span> <span>New</span>
+                    </button>
+                </div>
+
+                <!-- === Files grid (max 8 per page) === -->
+                <div class="files-section">
+                    <div class="file-grid">
+                        <% (filesPage || []).forEach(function(f){ %>
+                            <div class="file-card" data-col="<%= f.col %>" data-url="<%= f.url %>">
+                                <div class="file-head">
+                                    <div class="file-name" title="<%= f.name %>">
+                                        <%= f.name %>
+                                    </div>
+                                    <button class="kebab" type="button" aria-label="More">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </button>
+                                </div>
+
+                                <div class="file-preview">
+                                    <% if (['png','jpg','jpeg','gif','webp','bmp','svg'].includes(f.ext)) { %>
+                                        <img src="<%= f.url %>" alt="<%= f.name %>">
+                                        <% } else if (f.ext==='pdf' ) { %>
+                                            <embed class="pdf" src="<%= f.url %>#toolbar=0" type="application/pdf">
+                                            <% } else if (['doc','docx','xls','xlsx','ppt','pptx'].includes(f.ext)) { %>
+                                                <iframe
+                                                    src="/document-upload/<%= folder.id %>/files/preview?col=<%= f.col %>"
+                                                    style="width:100%;height:100%;border:0;" loading="lazy"></iframe>
+                                                <% } else { %>
+                                                    <i class="fa-solid fa-file file-icon"></i>
+                                                    <% } %>
+                                </div>
+
+                                <div class="card-menu hidden">
+                                    <button class="act-rename" type="button">Rename</button>
+                                    <a class="act-download" style="text-decoration: none"
+                                        href="/document-upload/<%= folder.id %>/files/download?col=<%= f.col %>">Download</a>
+                                    <form class="act-delete" method="POST"
+                                        action="/document-upload/<%= folder.id %>/files/delete" style="margin:0">
+                                        <input type="hidden" name="col" value="<%= f.col %>">
+                                        <button type="submit" style="color:#dc2626">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <% }) %>
+                    </div>
+
+                    <!-- === File Preview Modal === -->
+                    <div id="filePreviewModal" class="preview-backdrop hidden">
+                        <div class="preview-container">
+                            <button class="close-preview" id="closePreview">&times;</button>
+                            <div id="previewContent"></div>
+                        </div>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="files-pagination">
+                        <% var total=Number(filesTotalPages || 1); var cur=Number(filesCurrentPage || 1); var first=1;
+                            var last=total; var prev=Math.max(first, cur - 1); var next=Math.min(last, cur + 1); /*
+                            window 3 halaman (geser mengikuti current) */ var start=Math.max(first, cur - 1); var
+                            end=Math.min(last, start + 2); start=Math.max(first, end - 2); %>
+
+                            <!-- First & Prev -->
+                            <a class="<%= cur===first ? 'disabled' : '' %>"
+                                href="/document-upload/<%= folder.id %>/files?page=<%= first %>">&laquo;</a>
+                            <a class="<%= cur===first ? 'disabled' : '' %>"
+                                href="/document-upload/<%= folder.id %>/files?page=<%= prev %>">&lsaquo;</a>
+
+                            <!-- Page numbers (maks 3) -->
+                            <% for (var p=start; p <=end; p++) { %>
+                                <% if (p===cur) { %>
+                                    <span class="active">
+                                        <%= p %>
+                                    </span>
+                                    <% } else { %>
+                                        <a href="/document-upload/<%= folder.id %>/files?page=<%= p %>">
+                                            <%= p %>
+                                        </a>
+                                        <% } %>
+                                            <% } %>
+
+                                                <!-- Next & Last -->
+                                                <a class="<%= cur===last ? 'disabled' : '' %>"
+                                                    href="/document-upload/<%= folder.id %>/files?page=<%= next %>">&rsaquo;</a>
+                                                <a class="<%= cur===last ? 'disabled' : '' %>"
+                                                    href="/document-upload/<%= folder.id %>/files?page=<%= last %>">&raquo;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>© Jatim Capital 2025</footer>
+
+        <!-- Modal Upload File -->
+        <div id="uploadModal" class="modal-backdrop hidden" aria-hidden="true">
+            <div class="modal" role="dialog" aria-modal="true" aria-labelledby="uploadModalTitle">
+                <h3 id="uploadModalTitle">Upload file ke folder ini</h3>
+
+                <!-- 1 tile: pilih file -->
+                <label class="upload-tile" for="fileInput">
+                    <div class="upload-icon">
+                        <i class="fa-solid fa-file-arrow-up"></i>
+                    </div>
+                    <div class="upload-text">
+                        <b>Pilih File</b>
+                        <span>PDF, DOCX, XLSX, JPG/PNG, dll (maks. sesuai server)</span>
+                    </div>
+                </label>
+
+                <!-- form upload hidden -->
+                <form id="uploadForm" method="POST"
+                    action="/document-upload/<%= (folder && folder.id) ? folder.id : folderId %>/files/upload"
+                    enctype="multipart/form-data">
+                    <input id="fileInput" name="files" type="file" multiple class="hidden" />
+                </form>
+
+                <div class="actions">
+                    <button type="button" class="btn-modal btn-secondary" id="btnCancelUpload">Cancel</button>
+                    <button type="button" class="btn-modal btn-primary" id="btnPickFile">
+                        <i class="fa-solid fa-upload" style="margin-right:8px;"></i>Pilih File
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // User menu
+            document.addEventListener("DOMContentLoaded", function () {
+                const toggle = document.getElementById("userMenuToggle");
+                const menu = document.getElementById("userMenu");
+
+                toggle.addEventListener("click", () => menu.classList.toggle("hidden"));
+                document.addEventListener("click", (e) => {
+                    if (!toggle.contains(e.target) && !menu.contains(e.target)) {
+                        menu.classList.add("hidden");
+                    }
+                });
+                document.getElementById("goMain").addEventListener("click", () => window.location.href = "/dashboard");
+            });
+
+            // Modal Upload
+            const btnNewFile = document.getElementById('btnNewFile');
+            const uploadModal = document.getElementById('uploadModal');
+            const btnCancelUpload = document.getElementById('btnCancelUpload');
+            const btnPickFile = document.getElementById('btnPickFile');
+            const fileInput = document.getElementById('fileInput');
+            const uploadForm = document.getElementById('uploadForm');
+
+            function openUpload() {
+                uploadModal.classList.remove('hidden');
+                uploadModal.setAttribute('aria-hidden', 'false');
+            }
+            function closeUpload() {
+                uploadModal.classList.add('hidden');
+                uploadModal.setAttribute('aria-hidden', 'true');
+            }
+
+            btnNewFile.addEventListener('click', openUpload);
+            btnCancelUpload.addEventListener('click', closeUpload);
+
+            // klik area luar modal -> tutup
+            uploadModal.addEventListener('click', (e) => { if (e.target === uploadModal) closeUpload(); });
+            // Esc tutup
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeUpload(); });
+
+            // tombol pilih file dan tile label sama-sama memicu input
+            btnPickFile.addEventListener('click', () => fileInput.click());
+            // (label .upload-tile sudah for="fileInput" jadi ikut memicu)
+
+            // jika file dipilih -> submit otomatis
+            fileInput.addEventListener('change', () => {
+                if (fileInput.files && fileInput.files.length > 0) {
+                    uploadForm.submit();
+                }
+            });
+
+            // === File card kebab actions ===
+            (function () {
+                function closeMenus(except) {
+                    document.querySelectorAll('.file-card .card-menu').forEach(m => {
+                        if (m !== except) m.classList.add('hidden');
+                    });
+                }
+                document.querySelectorAll('.file-card').forEach(card => {
+                    const menu = card.querySelector('.card-menu');
+                    const kebab = card.querySelector('.kebab');
+                    const renameBtn = card.querySelector('.act-rename');
+                    const delForm = card.querySelector('.act-delete');
+
+                    kebab?.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const hidden = menu.classList.contains('hidden');
+                        closeMenus();
+                        if (hidden) menu.classList.remove('hidden');
+                    });
+
+                    // Rename (ubah nama file di server & update DB)
+                    renameBtn?.addEventListener('click', async () => {
+                        const col = card.getAttribute('data-col');
+                        const current = card.getAttribute('data-url').split('/').pop();
+                        const base = current.replace(/\.[^.]+$/, '');
+                        const ext = current.includes('.') ? '.' + current.split('.').pop() : '';
+                        const newBase = prompt('Rename file:', base);
+                        if (!newBase) return;
+
+                        try {
+                            const res = await fetch(location.pathname.replace(/\/+$/, '') + '/rename', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                                body: new URLSearchParams({ col, new_name: newBase })
+                            });
+                            if (!res.ok) { throw new Error('rename failed'); }
+                            location.reload();
+                        } catch (e) { alert('Gagal rename file.'); }
+                    });
+
+                    // Konfirmasi delete
+                    delForm?.addEventListener('submit', (e) => {
+                        if (!confirm('Hapus file ini?')) e.preventDefault();
+                    });
+                });
+
+                // klik di luar -> tutup menu
+                document.addEventListener('click', () => closeMenus());
+            })();
+
+            // Full Screen Preview
+            const modal = document.getElementById("filePreviewModal");
+            const previewContent = document.getElementById("previewContent");
+            const closeBtn = document.getElementById("closePreview");
+
+            // Klik kartu file untuk buka preview
+            document.querySelectorAll(".file-card").forEach(card => {
+                const url = card.getAttribute("data-url");
+                const name = card.querySelector(".file-name")?.textContent.trim() || "";
+                const ext = (name.split('.').pop() || "").toLowerCase();
+
+                card.addEventListener("click", e => {
+                    if (e.target.closest(".kebab") || e.target.closest(".card-menu")) return; // jangan buka jika klik menu
+                    let content = "";
+
+                    if (["png", "jpg", "jpeg", "gif", "webp", "bmp", "svg"].includes(ext)) {
+                        content = `<img src="${url}" alt="${name}" />`;
+                    }
+                    else if (ext === "pdf") {
+                        content = `<embed src="${url}#toolbar=1" type="application/pdf" />`;
+                    }
+                    else if (["docx", "doc"].includes(ext)) {
+                        content = `<iframe src="/document-upload/${folderId}/files/preview?col=${card.dataset.col}" frameborder="0"></iframe>`;
+                    }
+                    else if (["xlsx", "xls"].includes(ext)) {
+                        content = `<iframe src="/document-upload/${folderId}/files/preview?col=${card.dataset.col}" frameborder="0"></iframe>`;
+                    }
+                    else {
+                        content = `
+          <div style="color:#fff;text-align:center;padding:20px;">
+            <i class="fa-solid fa-file fa-4x"></i>
+            <p style="margin-top:12px;">Preview tidak tersedia.<br>
+            <a href="${url}" target="_blank" style="color:#0ea5e9;">Download file</a></p>
+          </div>`;
+                    }
+
+                    previewContent.innerHTML = content;
+                    modal.classList.remove("hidden");
+                });
+            });
+
+            // Tutup modal
+            closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
+            modal.addEventListener("click", e => {
+                if (e.target === modal) modal.classList.add("hidden");
+            });
+        </script>
+</body>
+
+</html>

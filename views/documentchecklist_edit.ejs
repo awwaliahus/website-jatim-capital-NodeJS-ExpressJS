@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Document Checklist</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Font & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #333;
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background: #ffffff;
+            padding: 12px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            margin-top: 5px;
+            height: 70px;
+            object-fit: contain;
+        }
+
+        /* ===== MAIN NAVIGATION ===== */
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            gap: 26px;
+            margin: 0;
+            padding: 0;
+            margin-left: 680px;
+        }
+
+        .main-nav ul li a {
+            text-decoration: none;
+            color: #111827;
+            font-weight: 500;
+            font-size: 14px;
+            padding: 8px 14px;
+            border-radius: 6px;
+            transition: 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .main-nav ul li a:hover {
+            color: #fff;
+            background: #111827;
+        }
+
+        .main-nav ul li a.active {
+            background: #111827;
+            color: #fff;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            header {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .main-nav {
+                width: 100%;
+                text-align: center;
+                margin-top: 10px;
+            }
+
+            .main-nav ul {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+        }
+
+        .user-circle {
+            width: 32px;
+            height: 32px;
+            background-color: #9ca3af;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .user-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .user-menu {
+            position: absolute;
+            top: 40px;
+            right: 0;
+            background-color: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 8px 0;
+            min-width: 150px;
+            z-index: 10;
+        }
+
+        .user-menu a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .user-menu a:hover {
+            background-color: #f3f4f6;
+        }
+
+        .user-menu a.delete-account {
+            color: #dc3545;
+            font-weight: 500;
+        }
+
+        /* ===== MAIN ===== */
+        .main {
+            flex: 1;
+            display: flex;
+            background: #ffffff;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            width: 250px;
+            background: #f9fafb;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 16px;
+            margin: 24px;
+
+            /* 🔧 Atur tinggi sidebar */
+            height: 455px;
+            overflow-y: auto;
+            /* biar kalau kontennya lebih panjang, bisa discroll */
+        }
+
+        .sidebar .name {
+            margin-top: 6px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .sidebar .nav {
+            margin-top: 24px;
+            width: 100%;
+        }
+
+        .sidebar .nav-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 11px !important;
+            text-align: left;
+            width: 100%;
+            padding-left: 8px;
+            cursor: pointer;
+            line-height: 1.3;
+            background: none;
+        }
+
+        #marketingToggle span {
+            font-size: 11px !important;
+            line-height: 1.3;
+        }
+
+        .sidebar form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sidebar form label img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            aspect-ratio: 1 / 1;
+            border: 2px solid #e5e7eb;
+            display: block;
+        }
+
+        /* ===== FORM ===== */
+        form#editForm {
+            width: 100%;
+            max-width: 380px;
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+        }
+
+        label {
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: block;
+            font-weight: 500;
+        }
+
+        select,
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .content {
+            flex: 1;
+            padding: 40px;
+        }
+
+        /* ===== TITLE ===== */
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #0a0b0b;
+            margin-bottom: 24px;
+        }
+
+        .page-title i {
+            color: #9ca3af;
+            font-size: 15px;
+        }
+
+        /* ===== FORM & TABLE ===== */
+        .form-table-container {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        form#businessForm {
+            width: 100%;
+            max-width: 380px;
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+        }
+
+        label {
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: block;
+            font-weight: 500;
+        }
+
+        select,
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        #tableSection {
+            flex: 1;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            margin-top: 90px;
+            margin-bottom: 40px;
+            margin-right: 40px;
+            height: auto;
+            width: auto;
+            min-width: 722px
+        }
+
+        #tableSectionPerorangan {
+            flex: 1;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            margin-top: 90px;
+            margin-bottom: 40px;
+            margin-right: 40px;
+            height: auto;
+            width: auto;
+            min-width: 722px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid #e5e7eb;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #f9fafb;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        td input[type="radio"] {
+            display: block;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        /* ===== BUTTONS ===== */
+        .button-container {
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .btn {
+            background-color: #111827;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #9297a4;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #1f2937;
+            color: #fff;
+            text-align: left;
+            padding: 32px 24px;
+            font-size: 13px;
+            min-height: 80px;
+        }
+
+        /* ===== STATUS ICON ANIMATION ===== */
+        .status-result {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .status-result i {
+            font-size: 36px;
+            margin-bottom: 5px;
+        }
+
+        .status-result span {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .status-result.success i {
+            color: #16a34a;
+            animation: scaleUp 0.4s ease;
+        }
+
+        .status-result.success span {
+            color: #16a34a;
+        }
+
+        .status-result.failed i {
+            color: #dc2626;
+            animation: scaleUp 0.4s ease;
+        }
+
+        .status-result.failed span {
+            color: #dc2626;
+        }
+
+        .status-result.pending i {
+            color: #eab308;
+            animation: pulse 1.5s infinite;
+        }
+
+        .status-result.pending span {
+            color: #eab308;
+        }
+
+        /* ANIMASI */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleUp {
+            from {
+                transform: scale(0.7);
+            }
+
+            to {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+
+        <!-- ===== HEADER ===== -->
+        <header>
+            <div class="logo">
+                <img src="/img/koperasi-jatim-capital-logo.png" alt="Logo Koperasi Berkembang Bersama Kami">
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="/dashboard">Dashboard</a></li>
+                    <li><a href="/login">Log In</a></li>
+                    <li><a href="/signup">Sign Up</a></li>
+                </ul>
+            </nav>
+
+            <div class="user-dropdown">
+                <div class="user-circle" id="userMenuToggle">
+                    <%= user.first_name.charAt(0).toUpperCase() %>
+                </div>
+                <div class="user-menu hidden" id="userMenu">
+                    <a href="/logout"><i class="fa-solid fa-right-from-bracket" style="color:#dc3545;"></i> Logout</a>
+                    <form action="/delete-account" method="POST"
+                        onsubmit="return confirm('Apakah Anda yakin ingin menghapus akun Anda?')" style="margin: 0;">
+                        <button type="submit" class="delete-account"
+                            style="background: none; border: none; width: 100%; text-align: left; padding: 8px 16px; color: #dc3545; font-weight: 500; display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <i class="fa-solid fa-trash"></i> Delete Account
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </header>
+
+        <!-- ===== MAIN ===== -->
+        <div class="main">
+            <!-- SIDEBAR -->
+            <aside class="sidebar">
+                <form action="/upload-profile" method="POST" enctype="multipart/form-data">
+                    <% const profileImage=user.profile_picture && user.profile_picture.trim() !=='' ?
+                        user.profile_picture : '/img/profile.png' ; %>
+                        <label for="profileUpload">
+                            <img src="<%= profileImage %>" alt="Profile" onerror="this.src='/img/profile.png';" />
+                        </label>
+                        <input id="profileUpload" type="file" name="profile_picture" style="display: none;"
+                            onchange="this.form.submit()" />
+                </form>
+                <div class="name">
+                    <%= user.first_name %>
+                        <%= user.last_name %>
+                </div>
+                <div class="nav">
+                    <div class="nav-item" id="goMain">Dashboard</div>
+                    <div class="nav-item">Notes</div>
+                </div>
+            </aside>
+
+            <!-- ===== CONTENT ===== -->
+            <div class="content">
+                <div class="page-title">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Edit Document Checklist</span>
+                </div>
+
+                <div class="form-table-container">
+                    <!-- FORM -->
+                    <form id="editForm" method="POST" action="/document-checklist/<%= data.id %>/update">
+                        <label for="jenis_pemohon">Jenis Pemohon:</label>
+                        <select id="jenis_pemohon" name="jenis_pemohon" required>
+                            <option value="perusahaan" <%=data.jenis_pemohon==='perusahaan' ? 'selected' : '' %>
+                                >Perusahaan
+                            </option>
+                            <option value="perorangan" <%=data.jenis_pemohon==='perorangan' ? 'selected' : '' %>
+                                >Perorangan
+                            </option>
+                        </select>
+
+                        <label>Nama:</label>
+                        <input type="text" name="nama" value="<%= data.nama %>" required>
+
+                        <label>Nama Perusahaan:</label>
+                        <input type="text" name="nama_perusahaan" value="<%= data.nama_perusahaan %>">
+
+                        <label>Bidang Usaha:</label>
+                        <input type="text" name="bidang_usaha" value="<%= data.bidang_usaha %>">
+
+                        <div class="button-container" style="margin-top:15px;">
+                            <button type="submit" class="btn">Simpan Perubahan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- ==== TABLE PERUSAHAAN ==== -->
+            <div id="tableSection" class="<%= data.jenis_pemohon === 'perusahaan' ? '' : 'hidden' %>">
+                <table id="tablePerusahaan">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Dokumen</th>
+                            <th>Ada</th>
+                            <th>Tidak Ada</th>
+                            <th>Keterangan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td style="font-weight:bold;">LEGALITAS USAHA</td>
+                            <td></td>
+                            <td></td>
+                            <td rowspan="20" id="status-cell">
+                                <textarea name="keterangan" id="keterangan"
+                                    style="width:100%; height:400px;"><%= data.keterangan ?? '' %></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>AKTA PENDIRIAN PT/CV</td>
+                            <td>
+                                <input type="radio" name="akte_pendirian_ptcv" value="1" <%=data.akte_pendirian_ptcv==1
+                                    ? 'checked' : '' %>>
+                                <input type="hidden" name="akte_pendirian_ptcv_hidden"
+                                    value="<%= data.akte_pendirian_ptcv ?? -1 %>">
+                            </td>
+                            <td><input type="radio" name="akte_pendirian_ptcv" value="0" <%=data.akte_pendirian_ptcv==0
+                                    ? 'checked' : '' %>></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>AKTA PERUBAHAN PT/CV</td>
+                            <td>
+                                <input type="radio" name="akta_perubahan_ptcv" value="1" <%=data.akta_perubahan_ptcv==1
+                                    ? 'checked' : '' %>>
+                                <input type="hidden" name="akta_perubahan_ptcv_hidden"
+                                    value="<%= data.akta_perubahan_ptcv ?? -1 %>">
+                            </td>
+                            <td><input type="radio" name="akta_perubahan_ptcv" value="0" <%=data.akta_perubahan_ptcv==0
+                                    ? 'checked' : '' %>></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>NPWP PT/CV</td>
+                            <td>
+                                <input type="radio" name="npwp_ptcv" value="1" <%=data.npwp_ptcv==1 ? 'checked' : '' %>>
+                                <input type="hidden" name="npwp_ptcv_hidden" value="<%= data.npwp_ptcv ?? -1 %>">
+                            </td>
+                            <td><input type="radio" name="npwp_ptcv" value="0" <%=data.npwp_ptcv==0 ? 'checked' : '' %>>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>SK MENKUMHAM PT/CV</td>
+                            <td>
+                                <input type="radio" name="sk_menkumham_ptcv" value="1" <%=data.sk_menkumham_ptcv==1
+                                    ? 'checked' : '' %>>
+                                <input type="hidden" name="sk_menkumham_ptcv_hidden"
+                                    value="<%= data.sk_menkumham_ptcv ?? -1 %>">
+                            </td>
+                            <td><input type="radio" name="sk_menkumham_ptcv" value="0" <%=data.sk_menkumham_ptcv==0
+                                    ? 'checked' : '' %>></td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>SIUP/NIB</td>
+                            <td>
+                                <input type="radio" name="siup_nib" value="1" <%=data.siup_nib==1 ? 'checked' : '' %>>
+                                <input type="hidden" name="siup_nib_hidden" value="<%= data.siup_nib ?? -1 %>">
+                            </td>
+                            <td><input type="radio" name="siup_nib" value="0" <%=data.siup_nib==0 ? 'checked' : '' %>>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>TDP</td>
+                            <td>
+                                <input type="radio" name="tdp" value="1" <%=data.tdp==1 ? 'checked' : '' %>>
+                                <input type="hidden" name="tdp_hidden" value="<%= data.tdp ?? -1 %>">
+                            </td>
+                            <td><input type="radio" name="tdp" value="0" <%=data.tdp==0 ? 'checked' : '' %>></td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>KTP SELURUH PENGURUS PT/CV</td>
+                            <td>
+                                <input type="radio" name="ktp_pengurus_ptcv" value="1" <%=data.ktp_pengurus_ptcv==1
+                                    ? 'checked' : '' %>>
+                                <input type="hidden" name="ktp_pengurus_ptcv_hidden"
+                                    value="<%= data.ktp_pengurus_ptcv ?? -1 %>">
+                            </td>
+                            <td><input type="radio" name="ktp_pengurus_ptcv" value="0" <%=data.ktp_pengurus_ptcv==0
+                                    ? 'checked' : '' %>></td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td>NPWP PENGURUS PT/CV</td>
+                            <td>
+                                <input type="radio" name="npwp_pengurus_ptcv" value="1" <%=data.npwp_pengurus_ptcv==1
+                                    ? 'checked' : '' %>>
+                                <input type="hidden" name="npwp_pengurus_ptcv_hidden"
+                                    value="<%= data.npwp_pengurus_ptcv ?? -1 %>">
+                            </td>
+                            <td><input type="radio" name="npwp_pengurus_ptcv" value="0" <%=data.npwp_pengurus_ptcv==0
+                                    ? 'checked' : '' %>></td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td style="font-weight:bold;">KEUANGAN</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>LAPORAN KEUANGAN / REK KORAN</td>
+                            <td>
+                                <input type="radio" name="laporan_keuangan" value="1" <%=data.laporan_keuangan==1
+                                    ? 'checked' : '' %>>
+                                <input type="hidden" name="laporan_keuangan_hidden"
+                                    value="<%= data.laporan_keuangan ?? -1 %>">
+                            </td>
+                            <td><input type="radio" name="laporan_keuangan" value="0" <%=data.laporan_keuangan==0
+                                    ? 'checked' : '' %>></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>INVOICE PELANGGAN / KONTRAK KERJA</td>
+                            <td>
+                                <input type="radio" name="invoice_pelanggan_kontrak_kerja" value="1"
+                                    <%=data.invoice_pelanggan_kontrak_kerja==1 ? 'checked' : '' %>>
+                                <input type="hidden" name="invoice_pelanggan_kontrak_kerja_hidden"
+                                    value="<%= data.invoice_pelanggan_kontrak_kerja ?? -1 %>">
+                            </td>
+                            <td><input type="radio" name="invoice_pelanggan_kontrak_kerja" value="0"
+                                    <%=data.invoice_pelanggan_kontrak_kerja==0 ? 'checked' : '' %>></td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td style="font-weight:bold;">JAMINAN</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>SERTIFIKAT (SHM ATAU SHGB)</td>
+                            <td>
+                                <input type="radio" name="sertifikat_shm_shgb" value="1" <%=data.sertifikat_shm_shgb==1
+                                    ? 'checked' : '' %>>
+                                <input type="hidden" name="sertifikat_shm_shgb_hidden"
+                                    value="<%= data.sertifikat_shm_shgb ?? -1 %>">
+                            </td>
+                            <td><input type="radio" name="sertifikat_shm_shgb" value="0" <%=data.sertifikat_shm_shgb==0
+                                    ? 'checked' : '' %>></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>IMB</td>
+                            <td>
+                                <input type="radio" name="imb" value="1" <%=data.imb==1 ? 'checked' : '' %>>
+                                <input type="hidden" name="imb_hidden" value="<%= data.imb ?? -1 %>">
+                            </td>
+                            <td><input type="radio" name="imb" value="0" <%=data.imb==0 ? 'checked' : '' %>></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>PBB TAHUN TERAKHIR</td>
+                            <td>
+                                <input type="radio" name="pbb_terakhir" value="1" <%=data.pbb_terakhir==1 ? 'checked'
+                                    : '' %>>
+                                <input type="hidden" name="pbb_terakhir_hidden" value="<%= data.pbb_terakhir ?? -1 %>">
+                            </td>
+                            <td><input type="radio" name="pbb_terakhir" value="0" <%=data.pbb_terakhir==0 ? 'checked'
+                                    : '' %>></td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td style="font-weight:bold;">LAIN-LAIN</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>SUMMARY KREDIT</td>
+                            <td>
+                                <input type="radio" name="summary_kredit" value="1" <%=data.summary_kredit==1
+                                    ? 'checked' : '' %>>
+                                <input type="hidden" name="summary_kredit_hidden"
+                                    value="<%= data.summary_kredit ?? -1 %>">
+                            </td>
+                            <td><input type="radio" name="summary_kredit" value="0" <%=data.summary_kredit==0
+                                    ? 'checked' : '' %>></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>HASIL RESUME PENILAIAN JAMINAN (KJPP)</td>
+                            <td>
+                                <input type="radio" name="hasil_resume_penilaian_kjpp" value="1"
+                                    <%=data.hasil_resume_penilaian_kjpp==1 ? 'checked' : '' %>>
+                                <input type="hidden" name="hasil_resume_penilaian_kjpp_hidden"
+                                    value="<%= data.hasil_resume_penilaian_kjpp ?? -1 %>">
+                            </td>
+                            <td><input type="radio" name="hasil_resume_penilaian_kjpp" value="0"
+                                    <%=data.hasil_resume_penilaian_kjpp==0 ? 'checked' : '' %>></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>BUKU APPRAISAL</td>
+                            <td>
+                                <input type="radio" name="buku_appraisal" value="1" <%=data.buku_appraisal==1
+                                    ? 'checked' : '' %>>
+                                <input type="hidden" name="buku_appraisal_hidden"
+                                    value="<%= data.buku_appraisal ?? -1 %>">
+                            </td>
+                            <td><input type="radio" name="buku_appraisal" value="0" <%=data.buku_appraisal==0
+                                    ? 'checked' : '' %>></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ==== TABLE PERORANGAN ==== -->
+            <div id="tableSectionPerorangan" class="<%= data.jenis_pemohon === 'perorangan' ? '' : 'hidden' %>">
+                <table id="tablePerorangan">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Dokumen</th>
+                            <th>Ada</th>
+                            <th>Tidak Ada</th>
+                            <th>Keterangan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td style="font-weight:bold;">LEGALITAS USAHA</td>
+                            <td></td>
+                            <td></td>
+                            <td rowspan="20" id="status-cell">
+                                <textarea name="keterangan" rows="25"
+                                    style="width:100%;"><%= data.keterangan ?? '' %></textarea>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>1</td>
+                            <td>KTP SUAMI/ISTRI</td>
+                            <td>
+                                <input type="radio" name="ktp_suami_istri" value="1"
+                                    <%=data.ktp_suami_istri==1?'checked':''%>>
+                            </td>
+                            <td>
+                                <input type="radio" name="ktp_suami_istri" value="0"
+                                    <%=data.ktp_suami_istri==0?'checked':''%>>
+                            </td>
+                            <input type="hidden" name="ktp_suami_istri_hidden" value="<%=data.ktp_suami_istri ?? -1%>">
+                        </tr>
+
+                        <tr>
+                            <td>2</td>
+                            <td>NPWP PRIBADI</td>
+                            <td>
+                                <input type="radio" name="npwp_pribadi" value="1"
+                                    <%=data.npwp_pribadi==1?'checked':''%>>
+                            </td>
+                            <td>
+                                <input type="radio" name="npwp_pribadi" value="0"
+                                    <%=data.npwp_pribadi==0?'checked':''%>>
+                            </td>
+                            <input type="hidden" name="npwp_pribadi_hidden" value="<%=data.npwp_pribadi ?? -1%>">
+                        </tr>
+
+                        <tr>
+                            <td>3</td>
+                            <td>KARTU KELUARGA</td>
+                            <td>
+                                <input type="radio" name="kartu_keluarga" value="1"
+                                    <%=data.kartu_keluarga==1?'checked':''%>>
+                            </td>
+                            <td>
+                                <input type="radio" name="kartu_keluarga" value="0"
+                                    <%=data.kartu_keluarga==0?'checked':''%>>
+                            </td>
+                            <input type="hidden" name="kartu_keluarga_hidden" value="<%=data.kartu_keluarga ?? -1%>">
+                        </tr>
+
+                        <tr>
+                            <td>4</td>
+                            <td>AKTA NIKAH</td>
+                            <td>
+                                <input type="radio" name="akta_nikah" value="1" <%=data.akta_nikah==1?'checked':''%>>
+                            </td>
+                            <td>
+                                <input type="radio" name="akta_nikah" value="0" <%=data.akta_nikah==0?'checked':''%>>
+                            </td>
+                            <input type="hidden" name="akta_nikah_hidden" value="<%=data.akta_nikah ?? -1%>">
+                        </tr>
+
+                        <tr>
+                            <td>5</td>
+                            <td>SIUP/ NIB</td>
+                            <td>
+                                <input type="radio" name="siup_nib" value="1" <%=data.siup_nib==1?'checked':''%>>
+                            </td>
+                            <td>
+                                <input type="radio" name="siup_nib" value="0" <%=data.siup_nib==0?'checked':''%>>
+                            </td>
+                            <input type="hidden" name="siup_nib_hidden" value="<%=data.siup_nib ?? -1%>">
+                        </tr>
+
+                        <tr>
+                            <td>6</td>
+                            <td>TDP</td>
+                            <td>
+                                <input type="radio" name="tdp" value="1" <%=data.tdp==1?'checked':''%>>
+                            </td>
+                            <td>
+                                <input type="radio" name="tdp" value="0" <%=data.tdp==0?'checked':''%>>
+                            </td>
+                            <input type="hidden" name="tdp_hidden" value="<%=data.tdp ?? -1%>">
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td style="font-weight:bold;">KEUANGAN</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+                        <tr>
+                            <td>1</td>
+                            <td>LAPORAN KEUANGAN / REK KORAN</td>
+                            <td>
+                                <input type="radio" name="laporan_keuangan" value="1"
+                                    <%=data.laporan_keuangan==1?'checked':''%>>
+                            </td>
+                            <td>
+                                <input type="radio" name="laporan_keuangan" value="0"
+                                    <%=data.laporan_keuangan==0?'checked':''%>>
+                            </td>
+                            <input type="hidden" name="laporan_keuangan_hidden"
+                                value="<%=data.laporan_keuangan ?? -1%>">
+                        </tr>
+
+                        <tr>
+                            <td>2</td>
+                            <td>INVOICE PELANGGAN / KONTRAK KERJA</td>
+                            <td>
+                                <input type="radio" name="invoice_pelanggan_kontrak_kerja" value="1"
+                                    <%=data.invoice_pelanggan_kontrak_kerja==1?'checked':''%>>
+                            </td>
+                            <td>
+                                <input type="radio" name="invoice_pelanggan_kontrak_kerja" value="0"
+                                    <%=data.invoice_pelanggan_kontrak_kerja==0?'checked':''%>>
+                            </td>
+                            <input type="hidden" name="invoice_pelanggan_kontrak_kerja_hidden"
+                                value="<%=data.invoice_pelanggan_kontrak_kerja ?? -1%>">
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td style="font-weight:bold;">JAMINAN</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+                        <tr>
+                            <td>1</td>
+                            <td>SERTIFIKAT (SHM ATAU SHGB)</td>
+                            <td>
+                                <input type="radio" name="sertifikat_shm_shgb" value="1"
+                                    <%=data.sertifikat_shm_shgb==1?'checked':''%>>
+                            </td>
+                            <td>
+                                <input type="radio" name="sertifikat_shm_shgb" value="0"
+                                    <%=data.sertifikat_shm_shgb==0?'checked':''%>>
+                            </td>
+                            <input type="hidden" name="sertifikat_shm_shgb_hidden"
+                                value="<%=data.sertifikat_shm_shgb ?? -1%>">
+                        </tr>
+
+                        <tr>
+                            <td>2</td>
+                            <td>IMB</td>
+                            <td>
+                                <input type="radio" name="imb" value="1" <%=data.imb==1?'checked':''%>>
+                            </td>
+                            <td>
+                                <input type="radio" name="imb" value="0" <%=data.imb==0?'checked':''%>>
+                            </td>
+                            <input type="hidden" name="imb_hidden" value="<%=data.imb ?? -1%>">
+                        </tr>
+
+                        <tr>
+                            <td>3</td>
+                            <td>PBB TAHUN TERAKHIR</td>
+                            <td>
+                                <input type="radio" name="pbb_terakhir" value="1"
+                                    <%=data.pbb_terakhir==1?'checked':''%>>
+                            </td>
+                            <td>
+                                <input type="radio" name="pbb_terakhir" value="0"
+                                    <%=data.pbb_terakhir==0?'checked':''%>>
+                            </td>
+                            <input type="hidden" name="pbb_terakhir_hidden" value="<%=data.pbb_terakhir ?? -1%>">
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td style="font-weight:bold;">LAIN-LAIN</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+                        <tr>
+                            <td>1</td>
+                            <td>SUMMARY KREDIT</td>
+                            <td>
+                                <input type="radio" name="summary_kredit" value="1"
+                                    <%=data.summary_kredit==1?'checked':''%>>
+                            </td>
+                            <td>
+                                <input type="radio" name="summary_kredit" value="0"
+                                    <%=data.summary_kredit==0?'checked':''%>>
+                            </td>
+                            <input type="hidden" name="summary_kredit_hidden" value="<%=data.summary_kredit ?? -1%>">
+                        </tr>
+
+                        <tr>
+                            <td>2</td>
+                            <td>HASIL RESUME PENILAIAN JAMINAN (KJPP)</td>
+                            <td>
+                                <input type="radio" name="hasil_resume_penilaian_kjpp" value="1"
+                                    <%=data.hasil_resume_penilaian_kjpp==1?'checked':''%>>
+                            </td>
+                            <td>
+                                <input type="radio" name="hasil_resume_penilaian_kjpp" value="0"
+                                    <%=data.hasil_resume_penilaian_kjpp==0?'checked':''%>>
+                            </td>
+                            <input type="hidden" name="hasil_resume_penilaian_kjpp_hidden"
+                                value="<%=data.hasil_resume_penilaian_kjpp ?? -1%>">
+                        </tr>
+
+                        <tr>
+                            <td>3</td>
+                            <td>BUKU APPRAISAL</td>
+                            <td>
+                                <input type="radio" name="buku_appraisal" value="1"
+                                    <%=data.buku_appraisal==1?'checked':''%>>
+                            </td>
+                            <td>
+                                <input type="radio" name="buku_appraisal" value="0"
+                                    <%=data.buku_appraisal==0?'checked':''%>>
+                            </td>
+                            <input type="hidden" name="buku_appraisal_hidden" value="<%=data.buku_appraisal ?? -1%>">
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        © Jatim Capital 2025
+    </footer>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        const toggle = document.getElementById("userMenuToggle");
+        const menu = document.getElementById("userMenu");
+
+        toggle.addEventListener("click", () => menu.classList.toggle("hidden"));
+        document.addEventListener("click", (e) => {
+          if (!toggle.contains(e.target) && !menu.contains(e.target)) {
+            menu.classList.add("hidden");
+          }
+        });
+            document.getElementById("goMain").addEventListener("click", function () {
+                window.location.href = "/dashboard";
+            });
+        });
+
+        // === FORM EDIT ===
+        const editForm = document.getElementById("editForm");
+
+        // === Paksa semua input di tabel ikut form edit ===
+        function attachFormAttribute() {
+            document
+                .querySelectorAll(
+                    '#tableSection input[type="radio"], #tableSection input[type="hidden"], #tableSection textarea[name="keterangan"], #tableSectionPerorangan input[type="radio"], #tableSectionPerorangan input[type="hidden"], #tableSectionPerorangan textarea[name="keterangan"]'
+                )
+                .forEach((el) => {
+                    el.setAttribute("form", "editForm");
+                });
+        }
+
+        // === TAMPILKAN TABEL SESUAI JENIS ===
+        const selectJenis = document.getElementById("jenis_pemohon");
+        const sectionPerusahaan = document.getElementById("tableSection");
+        const sectionPerorangan = document.getElementById("tableSectionPerorangan");
+
+        function toggleTable() {
+            if (!selectJenis || !sectionPerusahaan || !sectionPerorangan) return;
+            const perusahaan = selectJenis.value === "perusahaan";
+            sectionPerusahaan.classList.toggle("hidden", !perusahaan);
+            sectionPerorangan.classList.toggle("hidden", perusahaan);
+
+            // Disable radio di section yg hidden (hindari konflik group dan klik tak sengaja)
+            (sectionPerusahaan.querySelectorAll("input[type=radio]") || []).forEach((r) => (r.disabled = !perusahaan));
+            (sectionPerorangan.querySelectorAll("input[type=radio]") || []).forEach((r) => (r.disabled = perusahaan));
+        }
+
+        // === STATUS (PENDING/LENGKAP/TIDAK LENGKAP) ===
+        function updateStatus(table, statusCell) {
+            if (!table || !statusCell) return;
+            const rows = [...table.querySelectorAll("tbody tr")].filter((r) => r.querySelector('input[type="radio"]'));
+            const total = rows.length;
+            let ada = 0,
+                tidak = 0,
+                kosong = 0,
+                ceklis = 0;
+
+            rows.forEach((row) => {
+                const radios = row.querySelectorAll('input[type="radio"]');
+                const adaR = radios[0],
+                    tidakR = radios[1];
+                if (adaR?.checked) ada++;
+                if (tidakR?.checked) tidak++;
+                if (adaR?.checked || tidakR?.checked) ceklis++;
+                else kosong++;
+            });
+
+            let html = "";
+            if (kosong > 0) {
+                html =
+                    '<div class="status-result pending"><i class="fa-solid fa-hourglass-half"></i><span>PENDING</span></div>';
+            } else if (ada === total) {
+                html = '<div class="status-result success"><i class="fa-solid fa-circle-check"></i><span>LENGKAP</span></div>';
+            } else if (tidak === total) {
+                html =
+                    '<div class="status-result failed"><i class="fa-solid fa-circle-xmark"></i><span>TIDAK LENGKAP</span></div>';
+            } else if (ceklis === total && ada > 0 && tidak > 0) {
+                html =
+                    '<div class="status-result failed"><i class="fa-solid fa-circle-xmark"></i><span>TIDAK LENGKAP</span></div>';
+            } else {
+                html =
+                    '<div class="status-result pending"><i class="fa-solid fa-hourglass-half"></i><span>PENDING</span></div>';
+            }
+            statusCell.innerHTML = html;
+        }
+
+        // === AMBIL LABEL STATUS (tanpa render ikon) ===
+        function getStatusLabel(table) {
+            if (!table) return "PENDING";
+            const rows = [...table.querySelectorAll("tbody tr")].filter(r => r.querySelector('input[type="radio"]'));
+            const total = rows.length;
+            let ada = 0, tidak = 0, kosong = 0, ceklis = 0;
+
+            rows.forEach(row => {
+                const radios = row.querySelectorAll('input[type="radio"]');
+                const adaR = radios[0], tidakR = radios[1];
+                if (adaR?.checked) ada++;
+                if (tidakR?.checked) tidak++;
+                if (adaR?.checked || tidakR?.checked) ceklis++; else kosong++;
+            });
+
+            if (kosong > 0) return "PENDING";
+            if (ada === total) return "LENGKAP";
+            if (tidak === total) return "TIDAK LENGKAP";
+            if (ceklis === total && ada > 0 && tidak > 0) return "TIDAK LENGKAP";
+            return "PENDING";
+        }
+
+
+        // === ALLOW UNCHECK (klik ulang radio membatalkan pilihan) ===
+        function enableRadioUncheck(container) {
+            if (!container) return;
+            container.addEventListener("pointerdown", (e) => {
+                const r = e.target;
+                if (r?.tagName === "INPUT" && r.type === "radio" && !r.disabled) {
+                    r.dataset.downChecked = r.checked ? "1" : "0";
+                }
+            });
+            container.addEventListener("click", (e) => {
+                const r = e.target;
+                if (r?.tagName === "INPUT" && r.type === "radio" && !r.disabled) {
+                    if (r.dataset.downChecked === "1") {
+                        r.checked = false;
+                        r.dispatchEvent(new Event("change", { bubbles: true }));
+                    }
+                }
+            });
+        }
+
+        // === FIELD NAMES (dipakai untuk sinkronisasi hidden & submit) ===
+        const FIELD_NAMES = [
+            // PERUSAHAAN
+            "akte_pendirian_ptcv",
+            "akta_perubahan_ptcv",
+            "npwp_ptcv",
+            "sk_menkumham_ptcv",
+            "siup_nib",
+            "tdp",
+            "ktp_pengurus_ptcv",
+            "npwp_pengurus_ptcv",
+            "laporan_keuangan",
+            "invoice_pelanggan_kontrak_kerja",
+            "sertifikat_shm_shgb",
+            "imb",
+            "pbb_terakhir",
+            "summary_kredit",
+            "hasil_resume_penilaian_kjpp",
+            "buku_appraisal",
+            // PERORANGAN
+            "ktp_suami_istri",
+            "npwp_pribadi",
+            "kartu_keluarga",
+            "akta_nikah",
+        ];
+
+        // === SINKRONISASI: dari *_hidden (nilai DB) -> centang radio awal
+        function applyHiddenToRadios(scope = document) {
+            const hiddens = scope.querySelectorAll('input[type="hidden"][name$="_hidden"]');
+            hiddens.forEach((h) => {
+                const base = h.name.replace(/_hidden$/, "");
+                const val = (h.value ?? "-1").toString(); // "-1" | "0" | "1"
+                const radios = scope.querySelectorAll(`input[type="radio"][name="${base}"]`);
+                // bersihkan centang dulu
+                radios.forEach((r) => (r.checked = false));
+                // set sesuai DB
+                if (val === "0" || val === "1") {
+                    const target = scope.querySelector(`input[type="radio"][name="${base}"][value="${val}"]`);
+                    if (target) target.checked = true;
+                } // kalau -1 biarkan dua-duanya unchecked
+            });
+        }
+
+        // === Saat user ganti radio: update *_hidden agar konsisten untuk submit
+        function wireRadioChangeUpdateHidden(scope = document) {
+            scope.querySelectorAll('input[type="radio"]').forEach((radio) => {
+                radio.addEventListener("change", function () {
+                    const hidden = scope.querySelector(`input[name="${this.name}_hidden"]`);
+                    if (hidden) hidden.value = this.checked ? this.value : "-1";
+                    // perbarui status di section terkait
+                    if (sectionPerusahaan?.contains(this)) updateStatus(tableP, statusP);
+                    if (sectionPerorangan?.contains(this)) updateStatus(tableO, statusO);
+                });
+            });
+        }
+
+        // === Inisialisasi utama saat halaman siap ===
+        (function initPage() {
+            attachFormAttribute();
+            toggleTable();
+
+            // Sinkronkan UI dari DB
+            applyHiddenToRadios(document);
+
+            // Status awal
+            window.tableP = document.querySelector("#tableSection table");
+            window.tableO = document.querySelector("#tableSectionPerorangan table");
+            window.statusP = document.querySelector("#tableSection td[rowspan]");
+            window.statusO = document.querySelector("#tableSectionPerorangan td[rowspan]");
+            updateStatus(tableP, statusP);
+            updateStatus(tableO, statusO);
+
+            // Uncheck behavior
+            enableRadioUncheck(sectionPerusahaan);
+            enableRadioUncheck(sectionPerorangan);
+
+            // Radio change -> update hidden
+            wireRadioChangeUpdateHidden(document);
+
+            // Ganti jenis: hanya toggle & sinkron dari hidden, TANPA reset massal
+            if (selectJenis) {
+                selectJenis.addEventListener("change", () => {
+                    toggleTable();
+                    applyHiddenToRadios(document); // tampilkan kondisi sesuai DB di section aktif
+                    updateStatus(tableP, statusP);
+                    updateStatus(tableO, statusO);
+                });
+            }
+        })();
+
+        // === Submit: pastikan semua *_hidden ada dan bernilai 1/0/-1 sesuai radio; dan hanya keterangan aktif yang bernama "keterangan"
+        if (editForm) {
+            editForm.addEventListener("submit", function () {
+                attachFormAttribute(); // jaga2
+
+                // 1) Sync semua radio -> *_hidden
+                FIELD_NAMES.forEach((name) => {
+                    let hidden = document.querySelector(`input[name="${name}_hidden"]`);
+                    if (!hidden) {
+                        hidden = document.createElement("input");
+                        hidden.type = "hidden";
+                        hidden.name = `${name}_hidden`;
+                        hidden.setAttribute("form", "editForm");
+                        editForm.appendChild(hidden);
+                    }
+                    const selected = document.querySelector(`input[name="${name}"]:checked`);
+                    hidden.value = selected ? selected.value : "-1";
+                });
+
+                // Tentukan section aktif + textarea aktif
+                const perusahaanShown = sectionPerusahaan && !sectionPerusahaan.classList.contains("hidden");
+                const activeSection = perusahaanShown ? sectionPerusahaan : sectionPerorangan;
+                const activeKet = activeSection?.querySelector('textarea[name="keterangan"]');
+
+                // Non-aktifkan textarea yang tidak aktif supaya tidak ikut submit
+                document.querySelectorAll('textarea[name="keterangan"]').forEach((t) => {
+                    if (t === activeKet) {
+                        t.disabled = false;
+                        t.setAttribute("form", "editForm");
+                    } else {
+                        t.disabled = true;            // kunci: tidak terkirim
+                        t.removeAttribute("form");
+                    }
+                });
+
+                // Hitung STATUS dan tulis ke kolom keterangan yang aktif
+                const tableElm = activeSection?.querySelector("table");
+                const statusLabel = getStatusLabel(tableElm); // "PENDING" | "LENGKAP" | "TIDAK LENGKAP"
+
+                // Ambil catatan user (kalau mau digabung). Cari textarea aktif lalu ambil nilainya.
+                const activeTextarea = activeSection?.querySelector('textarea[name="keterangan"]');
+                const userNotes = (activeTextarea?.value || "").trim();
+
+                // === PILIH SATU VARIAN ===
+                // A) Simpan STATUS saja:
+                const finalKeterangan = statusLabel;
+
+                // 5) Pastikan hanya ada 1 field bernama "keterangan" yang dikirim:
+                //    - Rename semua textarea agar tidak mengirim "keterangan"
+                document.querySelectorAll('textarea[name="keterangan"]').forEach((t) => {
+                    t.name = "keterangan_ignored";         // tidak ikut terkirim
+                    t.removeAttribute("form");
+                    t.disabled = true;
+                });
+
+                //    - Buat/isi input hidden "keterangan"
+                let hiddenKet = document.querySelector('input[type="hidden"][name="keterangan"]');
+                if (!hiddenKet) {
+                    hiddenKet = document.createElement("input");
+                    hiddenKet.type = "hidden";
+                    hiddenKet.name = "keterangan";
+                    hiddenKet.setAttribute("form", "editForm");
+                    editForm.appendChild(hiddenKet);
+                }
+                hiddenKet.value = finalKeterangan;
+
+                if (activeKet) {
+                    // === PILIH SALAH SATU ===
+                    // (A) Jika hanya mau simpan status saja:
+                    activeKet.value = label;
+
+                    // (B) Jika mau simpan status + catatan yang sudah diketik user:
+                    // const notes = activeKet.value.trim();
+                    // activeKet.value = `[STATUS: ${label}]` + (notes ? `\n${notes}` : "");
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

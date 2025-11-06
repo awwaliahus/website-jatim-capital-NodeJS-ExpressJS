@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Upload</title>
+
+    <!-- ✅ Google Font: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- ✅ Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #333;
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background: #ffffff;
+            padding: 12px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            margin-top: 5px;
+            height: 70px;
+            object-fit: contain;
+        }
+
+        .user-circle {
+            width: 32px;
+            height: 32px;
+            background-color: #9ca3af;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .user-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .user-menu {
+            position: absolute;
+            top: 40px;
+            right: 0;
+            background-color: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 8px 0;
+            min-width: 150px;
+            z-index: 10;
+        }
+
+        .user-menu a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .user-menu a:hover {
+            background-color: #f3f4f6;
+        }
+
+        .user-menu a.delete-account {
+            color: #dc3545;
+            font-weight: 500;
+        }
+
+        /* ===== MAIN ===== */
+        .main {
+            flex: 1;
+            display: flex;
+            background: #ffffff;
+        }
+
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            gap: 26px;
+            margin: 0;
+            padding: 0;
+            margin-left: 680px;
+        }
+
+        .main-nav ul li a {
+            text-decoration: none;
+            color: #111827;
+            font-weight: 500;
+            font-size: 14px;
+            padding: 8px 14px;
+            border-radius: 6px;
+            transition: 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .main-nav ul li a:hover {
+            color: #fff;
+            background: #111827;
+        }
+
+        .main-nav ul li a.active {
+            background: #111827;
+            color: #fff;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #f9fafb;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 16px;
+            margin: 24px;
+
+            /* 🔧 Atur tinggi sidebar */
+            height: 455px;
+            /* ganti sesuai keinginan, misal 400px, 450px, dll */
+            overflow-y: auto;
+            /* biar kalau kontennya lebih panjang, bisa discroll */
+        }
+
+        .sidebar .name {
+            margin-top: 12px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .sidebar .nav {
+            margin-top: 24px;
+            width: 100%;
+        }
+
+        .sidebar .nav-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 11px !important;
+            text-align: left;
+            width: 100%;
+            padding-left: 8px;
+            cursor: pointer;
+            line-height: 1.3;
+            background: none;
+        }
+
+        #marketingToggle span {
+            font-size: 11px !important;
+            line-height: 1.3;
+        }
+
+        .sidebar form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sidebar form label img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            aspect-ratio: 1 / 1;
+            border: 2px solid #e5e7eb;
+            display: block;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .content {
+            flex: 1;
+            padding: 40px;
+        }
+
+        /* ===== PAGE TITLE (ikon rumah abu-abu + Dashboard) ===== */
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #0a0b0b;
+            margin-bottom: 24px;
+        }
+
+        .page-title i {
+            color: #9ca3af;
+            font-size: 15px;
+        }
+
+        .section-title {
+            font-weight: 600;
+            margin-bottom: 16px;
+            font-size: 18px;
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 400px;
+        }
+
+        .card-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 11px !important;
+        }
+
+        .pagination {
+            margin: 24px auto;
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .pagination button {
+            padding: 6px 12px;
+            border: 1px solid #d1d5db;
+            background: #fff;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        /* === New Folder button + modal === */
+        .new-area {
+            margin: 10px 0 24px;
+        }
+
+        .new-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #3f4751;
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            padding: 12px 18px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .new-btn .plus {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(255, 255, 255, .7);
+            line-height: 1;
+        }
+
+        /* Modal */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .45);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50
+        }
+
+        .modal-backdrop.hidden {
+            display: none !important;
+        }
+
+        .modal {
+            width: min(520px, 92vw);
+            background: #111827;
+            color: #e5e7eb;
+            border-radius: 16px;
+            padding: 22px 20px 18px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .4)
+        }
+
+        .modal h3 {
+            font-weight: 600;
+            margin-bottom: 14px
+        }
+
+        .modal .field {
+            margin: 14px 0 18px;
+            background: #0b1220;
+            border: 1px solid #374151;
+            border-radius: 10px;
+            padding: 10px 12px
+        }
+
+        .modal .field input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #e5e7eb;
+            font-size: 15px
+        }
+
+        .modal .actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px
+        }
+
+        .btn-modal {
+            border: none;
+            border-radius: 10px;
+            padding: 10px 16px;
+            font-weight: 600;
+            cursor: pointer
+        }
+
+        .btn-secondary {
+            background: #374151;
+            color: #e5e7eb
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: #fff
+        }
+
+        /* === Folders grid (max 4 per halaman) === */
+        .folder-section {
+            margin-top: 10px;
+        }
+
+        .folder-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(150px, 1fr));
+            /* ✅ 4 kolom */
+            gap: 16px;
+            justify-content: center;
+            align-items: stretch;
+            margin-top: 12px;
+        }
+
+        .folder-card {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            background: #fff;
+            transition: all 0.2s ease;
+            z-index: 0;
+        }
+
+        .folder-card.is-open {
+            z-index: 1000;
+        }
+
+        .folder-card-link {
+            display: flex;
+            /* <-- penting */
+            align-items: center;
+            /* <-- sejajar vertikal */
+            gap: 8px;
+            text-decoration: none;
+            color: inherit;
+            flex: 1;
+            /* isi ruang, kebab tetap di kanan */
+            min-width: 0;
+            /* biar ellipsis bekerja */
+        }
+
+        /* biar teks tidak turun & pakai elipsis jika panjang */
+        .folder-name {
+            font-weight: 600;
+            font-size: 13px;
+            color: #111827;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .folder-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .folder-icon {
+            width: 36px;
+            height: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background: #f3f4f6;
+            font-size: 18px;
+            color: #111827;
+        }
+
+        .folder-name {
+            font-weight: 600;
+            font-size: 13px;
+            color: #111827;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* === kebab menu (titik 3) di kartu folder === */
+        .folder-kebab {
+            margin-left: auto;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+            background: #fff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .folder-kebab:hover {
+            background: #f9fafb;
+        }
+
+        .folder-menu {
+            position: absolute;
+            top: 40px;
+            right: 10px;
+            min-width: 160px;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+            border-radius: 10px;
+            padding: 8px 0;
+            z-index: 2000;
+        }
+
+        .folder-menu.hidden {
+            display: none;
+        }
+
+        .folder-menu .menu-item {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            padding: 10px 14px;
+            font-size: 13px;
+            color: #111827;
+            cursor: pointer;
+        }
+
+        .folder-menu .menu-item:hover {
+            background: #f3f4f6;
+        }
+
+        .folder-menu .menu-item.delete {
+            color: #dc2626;
+            font-weight: 600;
+        }
+
+        .empty-state {
+            grid-column: 1 / -1;
+            padding: 16px;
+            text-align: center;
+            color: #6b7280;
+            border: 1px dashed #e5e7eb;
+            border-radius: 10px;
+            font-size: 13px;
+        }
+
+        .folder-pager {
+            margin-top: 12px;
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+        }
+
+        .folder-pager a,
+        .folder-pager span {
+            min-width: 28px;
+            padding: 5px 8px;
+            text-align: center;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            text-decoration: none;
+            color: #111827;
+            background: #fff;
+            font-size: 13px;
+        }
+
+        .folder-pager .active {
+            background: #111827;
+            color: #fff;
+            border-color: #111827;
+        }
+
+        .folder-pager .disabled {
+            opacity: .45;
+            pointer-events: none;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #1f2937;
+            color: #fff;
+            text-align: left;
+            padding: 32px 24px;
+            font-size: 13px;
+            min-height: 80px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+            <div class="logo">
+                <img src="/img/koperasi-jatim-capital-logo.png" alt="Logo Koperasi Berkembang Bersama Kami">
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="/dashboard">Dashboard</a></li>
+                    <li><a href="/login">Log In</a></li>
+                    <li><a href="/signup">Sign Up</a></li>
+                </ul>
+            </nav>
+
+            <div class="user-dropdown">
+                <div class="user-circle" id="userMenuToggle">
+                    <%= user.first_name.charAt(0).toUpperCase() %>
+                </div>
+                <div class="user-menu hidden" id="userMenu">
+                    <a href="/logout"><i class="fa-solid fa-right-from-bracket" style="color:#dc3545;"></i> Logout</a>
+                    <form action="/delete-account" method="POST"
+                        onsubmit="return confirm('Apakah Anda yakin ingin menghapus akun Anda?')" style="margin: 0;">
+                        <button type="submit" class="delete-account"
+                            style="background: none; border: none; width: 100%; text-align: left; padding: 8px 16px; color: #dc3545; font-weight: 500; display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <i class="fa-solid fa-trash"></i> Delete Account
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </header>
+
+        <div class="main">
+            <aside class="sidebar">
+                <form action="/upload-profile" method="POST" enctype="multipart/form-data">
+                    <% const profileImage=user.profile_picture && user.profile_picture.trim() !=='' ?
+                        user.profile_picture : '/img/profile.png' ; %>
+                        <label for="profileUpload">
+                            <img src="<%= profileImage %>" alt="Profile" onerror="this.src='/img/profile.png';" />
+                        </label>
+                        <input id="profileUpload" type="file" name="profile_picture" style="display: none;"
+                            onchange="this.form.submit()" />
+                </form>
+
+                <div class="name">
+                    <%= user.first_name %>
+                        <%= user.last_name %>
+                </div>
+
+                <div class="nav">
+                    <div class="nav-item" id="goMain">Dashboard</div>
+                    <div class="nav-item">Notes</div>
+                </div>
+            </aside>
+
+            <div class="content">
+                <div class="page-title">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Document Upload</span>
+                </div>
+                <div class="new-area">
+                    <button id="btnNewFolder" class="new-btn" type="button">
+                        <span class="plus">+</span> <span>New</span>
+                    </button>
+                </div>
+
+                <!-- === Folder List (paginasi server-side 4/halaman) === -->
+                <div class="folder-section">
+                    <div class="folder-grid">
+                        <% if (typeof folders !=='undefined' && folders.length) { %>
+                            <% folders.forEach(function(f){ %>
+                                <div class="folder-card" data-folder-id="<%= f.id %>">
+                                    <a class="folder-card-link" href="/document-upload/<%= f.id %>/files"
+                                        title="<%= f.nama_folder %>">
+                                        <div class="folder-icon"><i class="fa-regular fa-folder"></i></div>
+                                        <div class="folder-name">
+                                            <%= f.nama_folder %>
+                                        </div>
+                                    </a>
+
+                                    <!-- kebab -->
+                                    <button type="button" class="folder-kebab" aria-haspopup="true"
+                                        aria-expanded="false" title="Opsi">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </button>
+
+                                    <!-- dropdown menu -->
+                                    <div class="folder-menu hidden">
+                                        <div class="menu-item" data-action="rename" data-id="<%= f.id %>"
+                                            data-name="<%= f.nama_folder %>">
+                                            <i class="fa-solid fa-pen"></i>
+                                            Rename Folder
+                                        </div>
+                                        <div class="menu-item delete" data-action="delete" data-id="<%= f.id %>">
+                                            <i class="fa-solid fa-trash"></i>
+                                            Hapus Folder
+                                        </div>
+                                    </div>
+                                </div>
+                                <% }) %>
+                                    <% } else { %>
+                                        <div class="empty-state">Belum ada folder. Buat folder baru dengan tombol
+                                            <b>New</b>.
+                                        </div>
+                                        <% } %>
+                    </div>
+
+                    <!-- Pager (safe defaults) -->
+                    <% const _page=(typeof page==='number' ? page : (locals.page || 1)); const _totalPages=(typeof
+                        totalPages==='number' ? totalPages : (locals.totalPages || 1)); const prev=Math.max(1, _page -
+                        1); const next=Math.min(_totalPages, _page + 1); %>
+                        <div class="folder-pager">
+                            <a class="<%= _page === 1 ? 'disabled' : '' %>" href="/document-upload?page=1">«</a>
+                            <a class="<%= _page === 1 ? 'disabled' : '' %>"
+                                href="/document-upload?page=<%= prev %>">‹</a>
+                            <% for (let p=Math.max(1, _page - 1); p <=Math.min(_totalPages, _page + 1); p++) { %>
+                                <% if (p===_page) { %>
+                                    <span class="active">
+                                        <%= p %>
+                                    </span>
+                                    <% } else { %>
+                                        <a href="/document-upload?page=<%= p %>">
+                                            <%= p %>
+                                        </a>
+                                        <% } %>
+                                            <% } %>
+                                                <a class="<%= _page === _totalPages ? 'disabled' : '' %>"
+                                                    href="/document-upload?page=<%= next %>">›</a>
+                                                <a class="<%= _page === _totalPages ? 'disabled' : '' %>"
+                                                    href="/document-upload?page=<%= _totalPages %>">»</a>
+                        </div>
+                </div>
+            </div>
+
+            <!-- Modal Create New Folder -->
+            <div id="folderModal" class="modal-backdrop hidden" aria-hidden="true">
+                <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+                    <h3 id="modalTitle">New folder</h3>
+                    <form id="newFolderForm" method="POST" action="/document-upload/new-folder">
+                        <div class="field">
+                            <input id="folderName" name="folder_name" type="text" placeholder="Untitled folder"
+                                autocomplete="off" required>
+                        </div>
+                        <div class="actions">
+                            <button type="button" class="btn-modal btn-secondary" id="cancelCreate">Cancel</button>
+                            <button type="submit" class="btn-modal btn-primary" id="confirmCreate">Create</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            © Jatim Capital 2025
+        </footer>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const toggle = document.getElementById("userMenuToggle");
+                const menu = document.getElementById("userMenu");
+
+                toggle.addEventListener("click", () => menu.classList.toggle("hidden"));
+                document.addEventListener("click", (e) => {
+                    if (!toggle.contains(e.target) && !menu.contains(e.target)) {
+                        menu.classList.add("hidden");
+                    }
+                });
+                document.getElementById("goMain").addEventListener("click", function () {
+                    window.location.href = "/dashboard";
+                });
+
+                // === kebab menu handler ===
+                const grid = document.querySelector('.folder-grid');
+
+                function closeAllMenus(except) {
+                    document.querySelectorAll('.folder-menu').forEach(m => {
+                        if (m !== except) m.classList.add('hidden');
+                    });
+                    document.querySelectorAll('.folder-card.is-open').forEach(c => c.classList.remove('is-open'));
+                }
+
+                grid && grid.addEventListener('click', async (e) => {
+                    const kebabBtn = e.target.closest('.folder-kebab');
+                    const menuDelete = e.target.closest('.menu-item.delete');
+                    const menuRename = e.target.closest('.menu-item[data-action="rename"]');
+
+                    // === toggle kebab
+                    if (kebabBtn) {
+                        e.preventDefault();
+                        const card = kebabBtn.closest('.folder-card');
+                        const menu = card.querySelector('.folder-menu');
+                        const willOpen = menu.classList.contains('hidden');
+
+                        closeAllMenus(menu);
+                        if (willOpen) {
+                            menu.classList.remove('hidden');
+                            card.classList.add('is-open');
+
+                            // auto-flip bila mentok bawah
+                            const r = menu.getBoundingClientRect();
+                            if (r.bottom > window.innerHeight) {
+                                menu.style.top = 'auto';
+                                menu.style.bottom = '40px';   // tampil ke atas tombol
+                            } else {
+                                menu.style.bottom = 'auto';
+                                menu.style.top = '40px';      // default ke bawah
+                            }
+                            kebabBtn.setAttribute('aria-expanded', 'true');
+                        } else {
+                            menu.classList.add('hidden');
+                            card.classList.remove('is-open');
+                            kebabBtn.setAttribute('aria-expanded', 'false');
+                        }
+                        return;
+                    }
+
+                    // === rename
+                    if (menuRename) {
+                        const id = menuRename.dataset.id;
+                        const curr = (menuRename.dataset.name || '').trim();
+                        const next = prompt('Nama folder baru:', curr);
+                        if (next == null) return;
+                        const newName = next.trim();
+                        if (!newName) { alert('Nama folder tidak boleh kosong.'); return; }
+
+                        try {
+                            const resp = await fetch(`/document-upload/${id}/rename`, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ new_name: newName })
+                            });
+                            if (resp.ok) { window.location.reload(); }
+                            else { alert('Gagal rename folder: ' + await resp.text()); }
+                        } catch {
+                            alert('Terjadi kesalahan jaringan saat rename folder.');
+                        }
+                        return;
+                    }
+
+                    // === delete
+                    if (menuDelete) {
+                        const id = menuDelete.dataset.id;
+                        if (!confirm('Yakin menghapus folder ini? Tindakan ini tidak dapat dibatalkan.')) return;
+                        try {
+                            const resp = await fetch(`/document-upload/${id}/delete`, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ _method: 'DELETE' })
+                            });
+                            if (resp.ok) { window.location.reload(); }
+                            else { alert('Gagal menghapus folder: ' + await resp.text()); }
+                        } catch {
+                            alert('Terjadi kesalahan jaringan saat menghapus folder.');
+                        }
+                        return;
+                    }
+                });
+
+                // klik di luar -> tutup semua
+                document.addEventListener('click', (e) => {
+                    const isMenu = e.target.closest('.folder-menu');
+                    const isKebab = e.target.closest('.folder-kebab');
+                    if (!isMenu && !isKebab) closeAllMenus();
+                });
+            });
+
+            // === New Folder only ===
+            const btnNewFolder = document.getElementById('btnNewFolder');
+            const modalBackdrop = document.getElementById('folderModal');
+            const formNewFolder = document.getElementById('newFolderForm');
+            const inputName = document.getElementById('folderName');
+            const btnCancel = document.getElementById('cancelCreate');
+
+            function openModal() {
+                modalBackdrop.classList.remove('hidden');
+                modalBackdrop.setAttribute('aria-hidden', 'false');
+                setTimeout(() => inputName.select(), 0);
+            }
+            function closeModal() {
+                modalBackdrop.classList.add('hidden');
+                modalBackdrop.setAttribute('aria-hidden', 'true');
+            }
+
+            btnNewFolder.addEventListener('click', openModal);
+            btnCancel.addEventListener('click', closeModal);
+
+            // klik area luar -> tutup
+            modalBackdrop.addEventListener('click', (e) => { if (e.target === modalBackdrop) closeModal(); });
+            // Esc -> tutup
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+            // Enter di input -> submit
+            inputName.addEventListener('keydown', (e) => { if (e.key === 'Enter') formNewFolder.requestSubmit(); });
+
+            // Validasi sederhana
+            formNewFolder.addEventListener('submit', (e) => {
+                const name = (inputName.value || '').trim();
+                if (!name) { e.preventDefault(); inputName.focus(); }
+            });
+        </script>
+</body>
+
+</html>

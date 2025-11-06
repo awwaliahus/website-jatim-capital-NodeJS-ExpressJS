@@ -233,6 +233,37 @@
             font-size: 18px;
         }
 
+        .title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .filters {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filters select,
+        .filters input {
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 14px;
+        }
+
+        .filters button {
+            padding: 6px 12px;
+            border: 1px solid #d1d5db;
+            background: #fff;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
         /* ===== TABEL ===== */
         table {
             width: 100%;
@@ -280,6 +311,7 @@
         }
 
         .pagination button {
+            min-width: 34px;
             padding: 6px 12px;
             border: 1px solid #d1d5db;
             background: #fff;
@@ -288,10 +320,16 @@
             transition: 0.3s;
         }
 
+        .pagination button[disabled] {
+            opacity: .45;
+            cursor: not-allowed;
+        }
+
         .pagination button.active {
             background: #111827;
-            color: white;
+            color: #fff;
         }
+
 
         /* ===== STATUS ICON ===== */
         .status-result {
@@ -420,23 +458,39 @@
 
                 <div class="nav">
                     <div class="nav-item" id="goMain">Dashboard</div>
-                    <div class="nav-item" id="marketingToggle" style="display: flex; justify-content: space-between;">
-                        <span>Laporan</span>
-                        <span>&#9662;</span>
-                    </div>
-                    <div id="marketingMenu" class="hidden" style="padding-left: 16px;">
-                        <div class="nav-item" id="goProspect">Document Checklist</div>
-                        <div class="nav-item">Document Upload</div>
-                        <div class="nav-item" id="goLog">Log Data</div>
-                    </div>
                     <div class="nav-item">Notes</div>
                 </div>
             </aside>
 
             <div class="content">
-                <div class="page-title">
-                    <i class="fa-solid fa-house"></i>
-                    <span>Log Data</span>
+                <!-- Judul + Filter di kanan -->
+                <div class="title-row">
+                    <div class="page-title">
+                        <i class="fa-solid fa-house"></i>
+                        <span>Log Data</span>
+                    </div>
+
+                    <!-- ✅ FILTER -->
+                    <div class="filters">
+                        <select id="filterJenis">
+                            <option value="">Semua Jenis</option>
+                            <option value="perusahaan">Perusahaan</option>
+                            <option value="perorangan">Perorangan</option>
+                        </select>
+
+                        <select id="filterKet">
+                            <option value="">Semua Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="lengkap">Lengkap</option>
+                            <option value="tidak lengkap">Tidak Lengkap</option>
+                        </select>
+
+                        <input id="filterPerusahaan" type="text" placeholder="Cari nama perusahaan…">
+
+                        <button id="resetFilter" type="button" title="Reset filter">
+                            Reset
+                        </button>
+                    </div>
                 </div>
 
                 <!-- ✅ TABEL DATA -->
@@ -453,7 +507,9 @@
                     </thead>
                     <tbody>
                         <% records.forEach((row, index)=> { %>
-                            <tr>
+                            <tr data-row="1" data-jenis="<%= (row.jenis_pemohon || '').toLowerCase() %>"
+                                data-perusahaan="<%= (row.nama_perusahaan || '').toLowerCase() %>"
+                                data-status="<%= (row.keterangan || '').toLowerCase() %>">
                                 <td>
                                     <%= row.jenis_pemohon %>
                                 </td>
@@ -491,12 +547,12 @@
                                                     <% } %>
                                 </td>
                                 <td class="action-buttons">
-                                    <!-- ✅ Tombol edit -->
+                                    <!-- Tombol edit -->
                                     <a href="/document-checklist/<%= row.id %>/edit" title="Edit Data">
                                         <i class="fa-solid fa-pen-to-square edit-icon"></i>
                                     </a>
 
-                                    <!-- ✅ Tombol delete -->
+                                    <!-- Tombol delete -->
                                     <form action="/delete/<%= row.id %>" method="POST" style="display:inline;"
                                         onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
                                         <button type="submit" class="delete-btn" title="Hapus Data">
@@ -518,70 +574,190 @@
     </div>
 
     <script>
-        // === SIDEBAR TOGGLE ===
         document.addEventListener("DOMContentLoaded", function () {
-            const marketingToggle = document.getElementById("marketingToggle");
-            const marketingMenu = document.getElementById("marketingMenu");
-            marketingToggle.addEventListener("click", () => {
-                marketingMenu.classList.toggle("hidden");
-            });
+            const toggle = document.getElementById("userMenuToggle");
+            const menu = document.getElementById("userMenu");
 
-            document.getElementById("goProspect").addEventListener("click", function () {
-                window.location.href = "/document-checklist";
-            });
-            document.getElementById("goLog").addEventListener("click", function () {
-                window.location.href = "/log-data";
+            toggle.addEventListener("click", () => menu.classList.toggle("hidden"));
+            document.addEventListener("click", (e) => {
+                if (!toggle.contains(e.target) && !menu.contains(e.target)) {
+                    menu.classList.add("hidden");
+                }
             });
             document.getElementById("goMain").addEventListener("click", function () {
                 window.location.href = "/dashboard";
             });
         });
 
-        // === PAGINATION + MINIMAL 6 ROWS ===
-        const rowsPerPage = 7; // ⬅️ minimal 6 baris per halaman
+        // === PAGINATION + FILTER (max 3 nomor) ===
+        const rowsPerPage = 6;
         const table = document.getElementById("logTable");
         const tbody = table.querySelector("tbody");
         const pagination = document.getElementById("pagination");
-        const rows = Array.from(tbody.querySelectorAll("tr"));
-        const pageCount = Math.ceil(rows.length / rowsPerPage) || 1; // minimal 1 halaman
 
-        // === Tambahkan baris kosong agar setiap halaman punya 6 baris ===
-        const totalNeeded = pageCount * rowsPerPage;
-        if (rows.length < totalNeeded) {
-            const cols = table.querySelectorAll("thead th").length;
-            for (let i = rows.length; i < totalNeeded; i++) {
-                const emptyRow = document.createElement("tr");
+        // Filter controls
+        const fJenis = document.getElementById("filterJenis");
+        const fKet = document.getElementById("filterKet");
+        const fPerusahaan = document.getElementById("filterPerusahaan");
+        const btnReset = document.getElementById("resetFilter");
+
+        // Kumpulan baris data asli (tanpa padding)
+        const dataRows = Array.from(tbody.querySelectorAll('tr[data-row="1"]'));
+        const cols = table.querySelectorAll("thead th").length;
+
+        // Pool baris kosong (padding) akan dibuat dinamis
+        const padClass = "pad-row";
+
+        let currentPage = 1;
+        const windowSize = 3; // maksimum nomor ditampilkan
+
+        // ---------- Util ----------
+        function norm(s) { return (s || "").toString().trim().toLowerCase(); }
+
+        function getRowStatus(row) {
+            // 1) pakai data-status kalau ada
+            let s = row.dataset.status;
+            if (s) return norm(s);
+            // 2) fallback dari teks di cell status
+            const cell = row.children[4]; // kolom keterangan
+            if (!cell) return "";
+            const span = cell.querySelector(".status-result span");
+            return norm(span ? span.textContent : cell.textContent);
+        }
+
+        function ensurePadRows(countNeeded) {
+            // Hapus semua pad-row lama
+            tbody.querySelectorAll(`tr.${padClass}`).forEach(r => r.remove());
+            // Tambahkan pad-row sesuai kebutuhan
+            for (let i = 0; i < countNeeded; i++) {
+                const tr = document.createElement("tr");
+                tr.className = padClass;
                 for (let j = 0; j < cols; j++) {
                     const td = document.createElement("td");
-                    td.innerHTML = "&nbsp;"; // isi spasi supaya tetap rapi
-                    emptyRow.appendChild(td);
+                    td.innerHTML = "&nbsp;";
+                    tr.appendChild(td);
                 }
-                tbody.appendChild(emptyRow);
+                tbody.appendChild(tr);
             }
         }
 
-        const allRows = Array.from(tbody.querySelectorAll("tr"));
+        // ---------- Filtering ----------
+        function getFilteredRows() {
+            const jenis = norm(fJenis.value);
+            const ket = norm(fKet.value);
+            const perusahaan = norm(fPerusahaan.value);
+
+            return dataRows.filter(row => {
+                const rJenis = norm(row.dataset.jenis);
+                const rPerusahaan = norm(row.dataset.perusahaan);
+                const rStatus = getRowStatus(row); // dari data-status / DOM
+
+                const okJenis = !jenis || rJenis === jenis;
+                const okKet = !ket || rStatus === ket;
+                const okPerusahaan = !perusahaan || rPerusahaan.includes(perusahaan);
+
+                return okJenis && okKet && okPerusahaan;
+            });
+        }
+
+        // ---------- Pagination core ----------
+        function createBtn(label, onClick, opts = {}) {
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.textContent = label;
+            if (opts.title) btn.title = opts.title;
+            if (opts.active) btn.classList.add("active");
+            if (opts.disabled) btn.setAttribute("disabled", "disabled");
+            btn.addEventListener("click", () => {
+                if (!opts.disabled) onClick();
+            });
+            return btn;
+        }
+
+        function renderPagination(total) {
+            const pageCount = Math.max(1, Math.ceil(total / rowsPerPage));
+            const cp = currentPage = Math.min(currentPage, pageCount);
+
+            pagination.innerHTML = "";
+
+            // « first
+            pagination.appendChild(
+                createBtn("«", () => showPage(1), { title: "Halaman pertama", disabled: cp === 1 })
+            );
+            // ‹ prev
+            pagination.appendChild(
+                createBtn("‹", () => showPage(cp - 1), { title: "Sebelumnya", disabled: cp === 1 })
+            );
+
+            // nomor (maks 3)
+            let start = Math.max(1, cp - 1);
+            let end = start + windowSize - 1;
+            if (end > pageCount) { end = pageCount; start = Math.max(1, end - windowSize + 1); }
+
+            for (let p = start; p <= end; p++) {
+                pagination.appendChild(
+                    createBtn(String(p), () => showPage(p), { active: p === cp, title: `Halaman ${p}` })
+                );
+            }
+
+            // › next
+            pagination.appendChild(
+                createBtn("›", () => showPage(cp + 1), { title: "Berikutnya", disabled: cp === pageCount })
+            );
+            // » last
+            pagination.appendChild(
+                createBtn("»", () => showPage(pageCount), { title: "Halaman terakhir", disabled: cp === pageCount })
+            );
+        }
 
         function showPage(page) {
-            allRows.forEach((row, i) => {
-                row.style.display = (i >= (page - 1) * rowsPerPage && i < page * rowsPerPage) ? "" : "none";
-            });
+            const filtered = getFilteredRows();
+            const total = filtered.length;
+            const pageCount = Math.max(1, Math.ceil(total / rowsPerPage));
+            currentPage = Math.min(Math.max(1, page), pageCount);
 
-            document.querySelectorAll(".pagination button").forEach((btn, i) => {
-                btn.classList.toggle("active", i + 1 === page);
-            });
+            // Sembunyikan semua data + pad-row
+            [...dataRows, ...tbody.querySelectorAll(`tr.${padClass}`)].forEach(r => r.style.display = "none");
+
+            // Range index
+            const startIdx = (currentPage - 1) * rowsPerPage;
+            const endIdx = Math.min(startIdx + rowsPerPage, total);
+
+            // Tampilkan baris yang kepilih
+            for (let i = startIdx; i < endIdx; i++) {
+                filtered[i].style.display = "";
+            }
+
+            // Siapkan padding agar selalu 6 baris tampil
+            const padNeeded = rowsPerPage - (endIdx - startIdx);
+            ensurePadRows(padNeeded);
+            // tampilkan pad-row (yang baru dibuat otomatis ada di akhir tbody)
+            tbody.querySelectorAll(`tr.${padClass}`).forEach(r => r.style.display = "");
+
+            // Render tombol paging sesuai total hasil filter
+            renderPagination(total);
         }
 
-        // === Buat tombol pagination ===
-        pagination.innerHTML = "";
-        for (let i = 1; i <= pageCount; i++) {
-            const btn = document.createElement("button");
-            btn.textContent = i;
-            btn.addEventListener("click", () => showPage(i));
-            pagination.appendChild(btn);
+        // ---------- Hook filter ----------
+        function resetFilter() {
+            fJenis.value = "";
+            fKet.value = "";
+            fPerusahaan.value = "";
+            currentPage = 1;
+            showPage(1);
         }
 
-        if (pageCount > 0) showPage(1);
+        function debounce(fn, ms = 250) {
+            let t; return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+        }
+
+        fJenis.addEventListener("change", () => showPage(1));
+        fKet.addEventListener("change", () => showPage(1));
+        fPerusahaan.addEventListener("input", debounce(() => showPage(1), 250));
+        btnReset.addEventListener("click", resetFilter);
+
+        // ---------- Init ----------
+        showPage(1);
     </script>
 </body>
 
